@@ -5,12 +5,12 @@ import requests
 
 # define global variables
 # options as globals
-usagemsg = "This program reads the JSON file that contains the list of applications extracted fromt he Mi app Store " \
-           "and then pushes the data to the SSRM"
+usagemsg = "This program uses 2 input files (both JSON) to submit advertiser and ad details for" \
+            "approval by Xiaomi's MAX advertising system"
 msg = arg.MSG()
 
 
-class SSRMApi:
+class MAXapi:
     def __init__(self, user: str, password: str, ssrmpath: str):
         self.user = user
         self.password = password
@@ -280,7 +280,7 @@ def main():
     applistfile = arg.Flags.configsettings['urlout'].format(arg.Flags.configsettings['applistnumber'])
     rd = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'], applistfile)
     rd.readinput()
-    ad = SSRMApi(arg.Flags.configsettings['username'], arg.Flags.configsettings['password'],
+    ad = MAXapi(arg.Flags.configsettings['username'], arg.Flags.configsettings['password'],
                  arg.Flags.configsettings['serverurl'])
     msg.VERBOSE("Starting Processing")
 
