@@ -59,6 +59,23 @@ sampleadvertiser = {
     }
   ]
 }
+samplecreative = {
+  "materials": [
+    {
+      "creativeId": "c_1",
+      "advId": "a5aa621db201ebee",
+      "templateId": "2.3",
+      "title": "title_1",
+      "source": "source_1",
+      "imgUrl": [
+        "http://cdn.scratch.mit.edu/static/site/projects/thumbnails/297/9712.png",
+        "http://cdn.scratch.mit.edu/static/site/projects/thumbnails/297/9712.png",
+        "http://cdn.scratch.mit.edu/static/site/projects/thumbnails/297/9712.png"
+      ],
+      "landingUrl": "www.mi.com"
+    }
+  ]
+}
 errcodes = {
     "200": {
         "addadvertiser": "Success",
@@ -121,11 +138,27 @@ def main():
             elif status == 4:
                 msg.VERBOSE("Advertiser Approved! {}".format(aid))
             else:
-                msg.VERBOSE("Unknown status code or no response")
+                msg.VERBOSE("Advertiser: Unknown status code or no response")
         else:
-            msg.ERROR("{} {} {}".format(code, status, rj['msg']))
+            msg.ERROR("Advertiser: {} {} {}".format(code, status, rj['msg']))
     else:
         msg.ERROR("Add of advertiser failed [{}]".format(aid))
+    c, aid = addcreative(baseurl)
+    if c == 0:
+        code, status, rj = querycreative(baseurl, aid)
+        if code == 0:
+            if status == 1:
+                msg.VERBOSE("Review Pending for {}". format(aid))
+            elif status == 3:
+                msg.VERBOSE("Creative Rejected {}".format(aid, rj['result'][0]['rejectReason']))
+            elif status == 4:
+                msg.VERBOSE("Creative Approved! {}".format(aid))
+            else:
+                msg.VERBOSE("Creative: Unknown status code or no response")
+        else:
+            msg.ERROR("Creative: {} {} {}".format(code, status, rj['msg']))
+    else:
+        msg.ERROR("Add of creative failed [{}]".format(aid))
 
     # doput(baseurl)
 
@@ -157,6 +190,37 @@ def addadvertiser(u: str):
             return rj['code'], rj['msg']
         else:
             return rj['code'], rj['result'][0]['advId']
+    else:
+        return None
+
+
+def querycreative(u: str, a):
+    actionURL = u + "/v1/creative/query?materialId=" + str(a)
+    msg.VERBOSE("GET: {}".format(actionURL))
+    r = requests.get(actionURL)
+    msg.DEBUG("{}\n{}".format(r.status_code, r.content.decode('utf-8')))
+    rj = json.loads(r.content.decode('utf-8'))
+    if r.status_code == 200:
+        if rj['code'] != 0:
+            return rj['code'], rj['result'][0]['code'], rj
+        else:
+            return rj['code'], rj['result'][0]['status'], rj
+    else:
+        return None
+
+
+
+def addcreative(u: str):
+    actionURL = u + "/v1/creative/add"
+    msg.VERBOSE("POST: {}".format(actionURL))
+    r = requests.post(actionURL, json=samplecreative, headers=sampleheader)
+    msg.DEBUG("{}\n{}\n{}".format(actionURL, r.status_code, r.content.decode('utf-8')))
+    if r.status_code == 200:
+        rj = json.loads(r.content.decode('utf-8'))
+        if rj['code'] != 0:
+            return rj['code'], rj['msg']
+        else:
+            return rj['code'], rj['result'][0]['materialId']
     else:
         return None
 
