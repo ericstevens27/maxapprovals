@@ -3,9 +3,9 @@
   "data": "",
   "username": "admin",
   "password": "Apple1995!",
-  "serverurl": "http://localhost:8081",
+  "serverurl": "http://localhost:5000",
   "urlout": "urllist_{}.json",
-  "baseurl": "http://localhost:8081",
-  "appurlbase": "http://localhost:8081",
-  "appdetailsbaseurl": "http://localhost:8081"
+  "baseurl": "http://localhost:5000",
+  "appurlbase": "http://localhost:5000",
+  "appdetailsbaseurl": "http://localhost:5000"
 }

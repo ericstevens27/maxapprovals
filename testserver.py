@@ -38,7 +38,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
         # Send message back to client
         message = "Hello world!"
         # Write content as utf-8 data
-        self.wfile.write(bytes(message, "utf8"))
+        self.wfile.write(bytes(test_data, "utf8"))
         return
 
   # PUT
