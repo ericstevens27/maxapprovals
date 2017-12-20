@@ -14,7 +14,7 @@ class Flags:
     ubuntu = False
     macos = False
     error = False
-    appid = None
+    id = None
     update = False
     configsettings = {}
 
@@ -48,8 +48,8 @@ class MyArgs:
                           help="Force processing")
         parser.add_option("-u", "--update", dest="update", action="store_true", default=False,
                           help="Update ad records. Default is no updates.")
-        parser.add_option("-a", "--appid", dest="appid", default=None,
-                          help="Xiaomi App Id or App list Number to check", metavar="APPID")
+        parser.add_option("-i", "--id", dest="id", default=None,
+                          help="Id to check for", metavar="ID")
         parser.add_option("-c", "--config", dest="config", default=None,
                           help="Configuration file (JSON)", metavar="CONFIG")
 
@@ -61,7 +61,7 @@ class MyArgs:
         Flags.debug = options.debug
         Flags.test = options.test
         Flags.force = options.force
-        Flags.appid = options.appid
+        Flags.id = options.id
         Flags.update = options.update
         if _platform == "linux" or _platform == "linux2":
             # linux

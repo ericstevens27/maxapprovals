@@ -3,5 +3,6 @@
   "data": "",
   "serverurl": "http://localhost:5000",
   "advfile": "advertiser_1.json",
-  "adfile": "creative_1.json"
+  "adfile": "creative_1.json",
+  "tracking": "tracking.json"
 }

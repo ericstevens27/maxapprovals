@@ -19,7 +19,7 @@ basecreative = {
 baseheader = {'content-type': 'application/json'}
 
 # options as globals
-usagemsg = "This program reads the advertiser and creative from the JSON and sends it to the server for approval"
+usagemsg = "This program reads the reative from the JSON and adds it to the server"
 msg = arg.MSG()
 
 
@@ -33,45 +33,14 @@ def main():
     else:
         baseurl = arg.Flags.configsettings['baseurl']
     msg.DEBUG(do)
-    advertiser = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
-                             arg.Flags.configsettings['advfile'])
-    advertiser.readinput()
     creative = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                            arg.Flags.configsettings['adfile'])
     creative.readinput()
-    msg.DEBUG("Adding Advertiser: {}".format(advertiser.data))
-    c, aid = addadvertiser(baseurl, advertiser.data)
-    if c == 0:
-        code, status, rj = queryadvertiser(baseurl, aid)
-        if code == 0:
-            if status == 1:
-                msg.VERBOSE("Review Pending for {}".format(aid))
-            elif status == 3:
-                msg.VERBOSE("Advertiser Rejected {}".format(aid, rj['result'][0]['rejectReason']))
-            elif status == 4:
-                msg.VERBOSE("Advertiser Approved! {}".format(aid))
-            else:
-                msg.VERBOSE("Advertiser: Unknown status code or no response")
-        else:
-            msg.ERROR("Advertiser: {} {} {}".format(code, status, rj['msg']))
-    else:
-        msg.ERROR("Add of advertiser failed [{}]".format(aid))
-    creative.data['advId'] = aid
+    creative.data['advId'] = arg.Flags.id
     msg.DEBUG("Adding Creative: {}".format(creative.data))
     c, mid = addcreative(baseurl, creative.data)
     if c == 0:
-        code, status, rj = querycreative(baseurl, mid)
-        if code == 0:
-            if status == 1:
-                msg.VERBOSE("Review Pending for {}".format(mid))
-            elif status == 3:
-                msg.VERBOSE("Creative Rejected {}".format(mid, rj['result'][0]['rejectReason']))
-            elif status == 4:
-                msg.VERBOSE("Creative Approved! {}".format(mid))
-            else:
-                msg.VERBOSE("Creative: Unknown status code or no response")
-        else:
-            msg.ERROR("Creative: {} {} {}".format(code, status, rj['msg']))
+        msg.VERBOSE("Creative added with materialId of {}".format(mid))
     else:
         msg.ERROR("Add of creative failed [{}]".format(mid))
 

@@ -102,7 +102,7 @@ class WriteJson:
         try:
             json_fh = open(json_file, "w", encoding='utf-8')
         except IOError as err:
-            print(ERROR, "Failed to open output file", json_file)
+            print(ERROR, "Failed to open output file for write", json_file)
             print(ERROR, err.errno, err.filename, err.strerror)
             sys.exit(1)
         json.dump(self.data, json_fh, indent=4, ensure_ascii=False)
