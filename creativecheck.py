@@ -34,91 +34,48 @@ def main():
         baseurl = arg.Flags.configsettings['baseurl']
     msg.DEBUG(do)
     tracking_init = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
-                             arg.Flags.configsettings['tracking'])
+                                arg.Flags.configsettings['tracking'])
     tracking_init.readinput()
     tracking_out = rb.WriteJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
-                             arg.Flags.configsettings['tracking'])
+                                arg.Flags.configsettings['tracking'])
     for el in tracking_init.data:
         if el['type'] == 'creative':
-            code, status, rj = querycreative(baseurl, el['id'])
-            if code == 0:
-                el['status'] = status
-                if status == 1:
-                    print("Review Pending for {}".format(el['id']))
-                elif status == 3:
-                    print("Creative Rejected {}".format(el['id'], rj['result'][0]['rejectReason']))
-                elif status == 4:
-                    print("Creative Approved! {}".format(el['id']))
+            status_code, rj = querycreative(baseurl, el['id'])
+            if status_code == 200:
+                if rj['code'] == 0:
+                    el['status'] = rj['result'][0]['status']
+                    if el['status'] == 1:
+                        print("Review Pending for {}".format(el['id']))
+                    elif el['status'] == 3:
+                        print("Advertiser Rejected {} with Reason: [{}]".format(el['id'],
+                                                                                rj['result'][0]['rejectReason']))
+                    elif el['status'] == 4:
+                        print("Advertiser Approved! {}".format(el['id']))
+                    else:
+                        msg.VERBOSE("Creative: Unknown status code or no response")
                 else:
-                    msg.VERBOSE("Creative: Unknown status code or no response")
+                    checkresp = "Creative Check Failed for materialId: {}: \n\tMessage: {}\n\tError Code: {}"\
+                                "\n\tError Message: {}\n\tDescription: {}"
+                    print(checkresp.format(el['id'], rj['msg'], rj['result'][0]['code'], rj['result'][0]['msg'],
+                                           rj['result'][0]['desc']))
             else:
-                msg.ERROR("Creative: {} {} {}".format(code, status, rj['msg']))
+                msg.ERROR("HTTP Response {}".format(status_code))
     tracking_out.data = tracking_init.data
     tracking_out.writeoutput()
-
-
-def queryadvertiser(u: str, a):
-    action_u_r_l = u + "/v1/advertiser/query?advId=" + str(a)
-    msg.DEBUG("GET: {}".format(action_u_r_l))
-    r = requests.get(action_u_r_l)
-    msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
-    rj = json.loads(r.content.decode('utf-8'))
-    if r.status_code == 200:
-        if rj['code'] != 0:
-            return rj['code'], rj['result'][0]['code'], rj
-        else:
-            return rj['code'], rj['result'][0]['status'], rj
-    else:
-        return None
-
-
-def addadvertiser(u: str, data):
-    action_u_r_l = u + "/v1/advertiser/add"
-    msg.DEBUG("POST: {}".format(action_u_r_l))
-    add_data = baseadvertiser
-    add_data['advertisers'].append(data)
-    r = requests.post(action_u_r_l, json=add_data, headers=baseheader)
-    msg.DEBUG("{}\n\t{}\n\t{}".format(action_u_r_l, r.status_code, r.content.decode('utf-8')))
-    if r.status_code == 200:
-        rj = json.loads(r.content.decode('utf-8'))
-        if rj['code'] != 0:
-            return rj['code'], rj['msg']
-        else:
-            return rj['code'], rj['result'][0]['advId']
-    else:
-        return None
 
 
 def querycreative(u: str, a):
     action_u_r_l = u + "/v1/creative/query?materialId=" + str(a)
     msg.DEBUG("GET: {}".format(action_u_r_l))
-    r = requests.get(action_u_r_l)
-    msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
-    rj = json.loads(r.content.decode('utf-8'))
-    if r.status_code == 200:
-        if rj['code'] != 0:
-            return rj['code'], rj['result'][0]['code'], rj
-        else:
-            return rj['code'], rj['result'][0]['status'], rj
-    else:
-        return None
-
-
-def addcreative(u: str, data):
-    action_u_r_l = u + "/v1/creative/add"
-    msg.DEBUG("POST: {}".format(action_u_r_l))
-    add_data = basecreative
-    add_data['materials'].append(data)
-    r = requests.post(action_u_r_l, json=add_data, headers=baseheader)
-    msg.DEBUG("{}\n\t{}\n\t{}".format(action_u_r_l, r.status_code, r.content.decode('utf-8')))
-    if r.status_code == 200:
-        rj = json.loads(r.content.decode('utf-8'))
-        if rj['code'] != 0:
-            return rj['code'], rj['msg']
-        else:
-            return rj['code'], rj['result'][0]['materialId']
-    else:
-        return None
+    try:
+        r = requests.get(action_u_r_l)
+        msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
+    except requests.exceptions.Timeout:
+        # Maybe set up for a retry, or continue in a retry loop
+        msg.ERROR("Connection timeout Error")
+    except requests.exceptions.RequestException as e:
+        msg.ERROR(e)
+    return r.status_code, json.loads(r.content.decode('utf-8'))
 
 
 if __name__ == '__main__':

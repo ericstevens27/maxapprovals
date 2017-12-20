@@ -3,11 +3,40 @@ from flask import Flask
 from flask import request
 import json
 import readbase as rb
+import random
 
 app = Flask(__name__)
 
 advertiser = rb.ReadJson('', '', 'adv_list_1.json')
 creative = rb.ReadJson('', '', 'creat_list_1.json')
+
+force_error = False
+
+
+def randomerror():
+    errcode = {
+        1001: ["Authentication error (dsp-token error)", ""],
+        1002: ["Missing required parameter error", "This will tell you which field is bad"],
+        1003: ["Illegal parameters", "This will tell you which field is illegal"],
+        1004: ["File format error", "This will tell you which file was bad"],
+        1005: ["File size error", "This will tell you which file had a problem"],
+        1006: ["The file size is incorrect", "This will tell you which file had a problem"],
+        1007: ["File get error", "This will tell you which file had a problem"],
+        2001: ["Upload failed", "This will tell you which upload had a problem"],
+        2002: ["Data does not exist", "This will tell you which data is missing"],
+        2003: ["Database error", "This will tell you the database error"],
+    }
+    i = random.randrange(2) + 1
+    if i == 1:
+        d = random.randrange(7) + 1
+    elif i == 2:
+        d = random.randrange(3) + 1
+    else:
+        i = 1
+        d = random.randrange(7) + 1
+    errkey = (i * 1000) + d
+    # print(i, d, errkey)
+    return(errkey, errcode[errkey][0], errcode[errkey][1])
 
 
 def makeadvresponse(c1, c2, s, r):
@@ -41,10 +70,10 @@ def makeadvresponse(c1, c2, s, r):
             }
             ]
         }
-        errorresponse['code'] = c1
-        errorresponse['msg'] = s
-        errorresponse['result'][0]['code'] = c2
-        errorresponse['result'][0]['msg'] = s
+        # errorresponse['code'] = c1
+        # errorresponse['msg'] = s
+        # errorresponse['result'][0]['code'] = c2
+        # errorresponse['result'][0]['msg'] = s
         return errorresponse
 
 def makecreativeresponse(c1, c2, cid, s, r):
@@ -81,10 +110,10 @@ def makecreativeresponse(c1, c2, cid, s, r):
             }
             ]
         }
-        errorresponse['code'] = c1
-        errorresponse['msg'] = s
-        errorresponse['result'][0]['code'] = c2
-        errorresponse['result'][0]['msg'] = s
+        # errorresponse['code'] = c1
+        # errorresponse['msg'] = s
+        # errorresponse['result'][0]['code'] = c2
+        # errorresponse['result'][0]['msg'] = s
         return errorresponse
 
 def loaddata():
@@ -115,17 +144,22 @@ def index():
 def get_adv():
     advid = request.args.get('advId')
     advertiser_status = 9
+    rr = ''
     for ad in advertiser.data:
         if str(ad['advId']) == advid:
             advertiser_status = ad['status']
-    if advertiser_status == 9:
+            if 'reason' in ad:
+                rr = ad['reason']
+    if advertiser_status == 9 or force_error:
         # did not find advid
-        review = makeadvresponse(2, 1002, "Did not find advertiser {}".format(advid), '')
+        review = makeadvresponse(2, '', '', '')
+        review['code'] = 2
+        review['msg'] = "All Failed"
+        code, msg, desc = randomerror()
+        review['result'][0]['code'] = code
+        review['result'][0]['msg'] = msg
+        review['result'][0]['desc'] = desc
     else:
-        if advertiser_status == 3:
-            rr = "Not good company"
-        else:
-            rr = ''
         review = makeadvresponse(0, advertiser_status, advid, rr)
     return json.dumps(review), 200
 
@@ -169,18 +203,24 @@ def get_creative():
     matid = request.args.get('materialId')
     createid = ''
     ad_status = 9
+    rr = ''
     for ad in creative.data:
         if str(ad['materialId']) == matid:
             createid = ad['creativeId']
             ad_status = ad['status']
-    if ad_status == 9:
+            if 'reason' in ad:
+                rr = ad['reason']
+    if ad_status == 9 or force_error:
         # did not find materialid
-        review = makecreativeresponse(2, 1002, '', "Did not find material {}".format(matid), '')
+        # code is 2 == All failed (since only one sent)
+        review = makecreativeresponse(2, '', '', '', '')
+        review['code'] = 2
+        review['msg'] = "All Failed"
+        code, msg, desc = randomerror()
+        review['result'][0]['code'] = code
+        review['result'][0]['msg'] = msg
+        review['result'][0]['desc'] = desc
     else:
-        if ad_status == 3:
-            rr = "Very bad ad"
-        else:
-            rr = ''
         review = makecreativeresponse(0, ad_status, createid, matid, rr)
     return json.dumps(review), 200
 

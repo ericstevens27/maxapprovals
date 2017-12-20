@@ -66,5 +66,57 @@
         ],
         "advId": 10004,
         "status": 1
+    },
+    {
+        "companyName": "Test Company Name",
+        "businessLicenseNum": "87654321",
+        "businessLicensePic": "http://spacesmobile.com",
+        "websiteName": "Spaces Mobile",
+        "icpPic": "http://spacesmobile.com",
+        "websiteAddress": "www.spacesmobile.com",
+        "industry": "51121",
+        "qualifications": [
+            {
+                "key": "software application development",
+                "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+            }
+        ],
+        "advId": 10005,
+        "status": 4
+    },
+    {
+        "companyName": "Test Company Name",
+        "businessLicenseNum": "87654321",
+        "businessLicensePic": "http://spacesmobile.com",
+        "websiteName": "Spaces Mobile",
+        "icpPic": "http://spacesmobile.com",
+        "websiteAddress": "www.spacesmobile.com",
+        "industry": "51121",
+        "qualifications": [
+            {
+                "key": "software application development",
+                "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+            }
+        ],
+        "advId": 10006,
+        "status": 1
+    },
+    {
+        "companyName": "Test Company Name",
+        "businessLicenseNum": "87654321",
+        "businessLicensePic": "http://spacesmobile.com",
+        "websiteName": "Spaces Mobile",
+        "icpPic": "http://spacesmobile.com",
+        "websiteAddress": "www.spacesmobile.com",
+        "industry": "51121",
+        "qualifications": [
+            {
+                "key": "software application development",
+                "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+            }
+        ],
+        "advId": 10007,
+        "status": 3,
+        "reason": "Bad company"
     }
 ]
