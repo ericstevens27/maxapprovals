@@ -15,6 +15,12 @@ basecreative = {
 
     ]
 }
+trackingentry = {
+    "type": "",
+    "id": "",
+    "status": 0,
+    "raw": {}
+}
 
 baseheader = {'content-type': 'application/json'}
 
@@ -33,24 +39,33 @@ def main():
     else:
         baseurl = arg.Flags.configsettings['baseurl']
     msg.DEBUG(do)
-    aid = arg.Flags.id
-    code, status, rj = queryadvertiser(baseurl, aid)
-    if code == 0:
-        if status == 1:
-            msg.VERBOSE("Review Pending for {}".format(aid))
-        elif status == 3:
-            msg.VERBOSE("Advertiser Rejected {}".format(aid, rj['result'][0]['rejectReason']))
-        elif status == 4:
-            msg.VERBOSE("Advertiser Approved! {}".format(aid))
-        else:
-            msg.VERBOSE("Advertiser: Unknown status code or no response")
-    else:
-        msg.ERROR("Advertiser: {} {} {}".format(code, status, rj['msg']))
+    tracking_init = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
+                             arg.Flags.configsettings['tracking'])
+    tracking_init.readinput()
+    tracking_out = rb.WriteJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
+                             arg.Flags.configsettings['tracking'])
+    for el in tracking_init.data:
+        if el['type'] == 'advertiser':
+            code, status, rj = queryadvertiser(baseurl, el['id'])
+            if code == 0:
+                el['status'] = status
+                if status == 1:
+                    print("Review Pending for {}".format(el['id']))
+                elif status == 3:
+                    print("Advertiser Rejected {}".format(el['id'], rj['result'][0]['rejectReason']))
+                elif status == 4:
+                    print("Advertiser Approved! {}".format(el['id']))
+                else:
+                    msg.VERBOSE("Advertiser: Unknown status code or no response")
+            else:
+                msg.ERROR("Advertiser: {} {} {}".format(code, status, rj['msg']))
+    tracking_out.data = tracking_init.data
+    tracking_out.writeoutput()
 
 
 def queryadvertiser(u: str, a):
     action_u_r_l = u + "/v1/advertiser/query?advId=" + str(a)
-    msg.VERBOSE("GET: {}".format(action_u_r_l))
+    msg.DEBUG("GET: {}".format(action_u_r_l))
     r = requests.get(action_u_r_l)
     msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
     rj = json.loads(r.content.decode('utf-8'))
@@ -65,7 +80,7 @@ def queryadvertiser(u: str, a):
 
 def addadvertiser(u: str, data):
     action_u_r_l = u + "/v1/advertiser/add"
-    msg.VERBOSE("POST: {}".format(action_u_r_l))
+    msg.DEBUG("POST: {}".format(action_u_r_l))
     add_data = baseadvertiser
     add_data['advertisers'].append(data)
     r = requests.post(action_u_r_l, json=add_data, headers=baseheader)
@@ -82,7 +97,7 @@ def addadvertiser(u: str, data):
 
 def querycreative(u: str, a):
     action_u_r_l = u + "/v1/creative/query?materialId=" + str(a)
-    msg.VERBOSE("GET: {}".format(action_u_r_l))
+    msg.DEBUG("GET: {}".format(action_u_r_l))
     r = requests.get(action_u_r_l)
     msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
     rj = json.loads(r.content.decode('utf-8'))
@@ -97,7 +112,7 @@ def querycreative(u: str, a):
 
 def addcreative(u: str, data):
     action_u_r_l = u + "/v1/creative/add"
-    msg.VERBOSE("POST: {}".format(action_u_r_l))
+    msg.DEBUG("POST: {}".format(action_u_r_l))
     add_data = basecreative
     add_data['materials'].append(data)
     r = requests.post(action_u_r_l, json=add_data, headers=baseheader)

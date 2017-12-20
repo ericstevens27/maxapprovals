@@ -16,7 +16,8 @@ basecreative = {
     ]
 }
 trackingentry = {
-    "advId": "",
+    "type": "",
+    "id": "",
     "status": 0,
     "raw": {}
 }
@@ -51,22 +52,24 @@ def main():
     c, aid = addadvertiser(baseurl, advertiser.data)
     if c == 0:
         writetracking(aid, 0, advertiser.data, tracking_out)
-        msg.VERBOSE("Advertiser added with advID {}".format(aid))
+        print("Advertiser added with advID {}".format(aid))
     else:
         msg.ERROR("Add of advertiser failed [{}]".format(aid))
 
 
 def writetracking(a, s, d, t):
     newrec = trackingentry
-    newrec['advId'] = a
+    newrec['type'] = 'advertiser'
+    newrec['id'] = a
     newrec['status'] = s
     newrec['raw'] = d
     t.data.append(newrec)
     t.writeoutput()
 
+
 def queryadvertiser(u: str, a):
     action_u_r_l = u + "/v1/advertiser/query?advId=" + str(a)
-    msg.VERBOSE("GET: {}".format(action_u_r_l))
+    msg.DEBUG("GET: {}".format(action_u_r_l))
     r = requests.get(action_u_r_l)
     msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
     rj = json.loads(r.content.decode('utf-8'))
@@ -81,7 +84,7 @@ def queryadvertiser(u: str, a):
 
 def addadvertiser(u: str, data):
     action_u_r_l = u + "/v1/advertiser/add"
-    msg.VERBOSE("POST: {}".format(action_u_r_l))
+    msg.DEBUG("POST: {}".format(action_u_r_l))
     add_data = baseadvertiser
     add_data['advertisers'].append(data)
     r = requests.post(action_u_r_l, json=add_data, headers=baseheader)
@@ -98,7 +101,7 @@ def addadvertiser(u: str, data):
 
 def querycreative(u: str, a):
     action_u_r_l = u + "/v1/creative/query?materialId=" + str(a)
-    msg.VERBOSE("GET: {}".format(action_u_r_l))
+    msg.DEBUG("GET: {}".format(action_u_r_l))
     r = requests.get(action_u_r_l)
     msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
     rj = json.loads(r.content.decode('utf-8'))
@@ -113,7 +116,7 @@ def querycreative(u: str, a):
 
 def addcreative(u: str, data):
     action_u_r_l = u + "/v1/creative/add"
-    msg.VERBOSE("POST: {}".format(action_u_r_l))
+    msg.DEBUG("POST: {}".format(action_u_r_l))
     add_data = basecreative
     add_data['materials'].append(data)
     r = requests.post(action_u_r_l, json=add_data, headers=baseheader)

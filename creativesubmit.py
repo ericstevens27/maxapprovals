@@ -15,6 +15,13 @@ basecreative = {
 
     ]
 }
+trackingentry = {
+    "type": "",
+    "id": "",
+    "status": 0,
+    "raw": {}
+}
+
 
 baseheader = {'content-type': 'application/json'}
 
@@ -36,20 +43,35 @@ def main():
     creative = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                            arg.Flags.configsettings['adfile'])
     creative.readinput()
+    tracking_init = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
+                             arg.Flags.configsettings['tracking'])
+    tracking_init.readinput()
+    tracking_out = rb.WriteJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
+                             arg.Flags.configsettings['tracking'])
+    tracking_out.data = tracking_init.data
     creative.data['advId'] = arg.Flags.id
     msg.DEBUG("Adding Creative: {}".format(creative.data))
     c, mid = addcreative(baseurl, creative.data)
     if c == 0:
-        msg.VERBOSE("Creative added with materialId of {}".format(mid))
+        writetracking(mid, 0, creative.data, tracking_out)
+        print("Creative added with materialId of {}".format(mid))
     else:
         msg.ERROR("Add of creative failed [{}]".format(mid))
 
-        # doput(baseurl)
+
+def writetracking(a, s, d, t):
+    newrec = trackingentry
+    newrec['type'] = 'creative'
+    newrec['id'] = a
+    newrec['status'] = s
+    newrec['raw'] = d
+    t.data.append(newrec)
+    t.writeoutput()
 
 
 def queryadvertiser(u: str, a):
     action_u_r_l = u + "/v1/advertiser/query?advId=" + str(a)
-    msg.VERBOSE("GET: {}".format(action_u_r_l))
+    msg.DEBUG("GET: {}".format(action_u_r_l))
     r = requests.get(action_u_r_l)
     msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
     rj = json.loads(r.content.decode('utf-8'))
@@ -64,7 +86,7 @@ def queryadvertiser(u: str, a):
 
 def addadvertiser(u: str, data):
     action_u_r_l = u + "/v1/advertiser/add"
-    msg.VERBOSE("POST: {}".format(action_u_r_l))
+    msg.DEBUG("POST: {}".format(action_u_r_l))
     add_data = baseadvertiser
     add_data['advertisers'].append(data)
     r = requests.post(action_u_r_l, json=add_data, headers=baseheader)
@@ -81,7 +103,7 @@ def addadvertiser(u: str, data):
 
 def querycreative(u: str, a):
     action_u_r_l = u + "/v1/creative/query?materialId=" + str(a)
-    msg.VERBOSE("GET: {}".format(action_u_r_l))
+    msg.DEBUG("GET: {}".format(action_u_r_l))
     r = requests.get(action_u_r_l)
     msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
     rj = json.loads(r.content.decode('utf-8'))
@@ -96,7 +118,7 @@ def querycreative(u: str, a):
 
 def addcreative(u: str, data):
     action_u_r_l = u + "/v1/creative/add"
-    msg.VERBOSE("POST: {}".format(action_u_r_l))
+    msg.DEBUG("POST: {}".format(action_u_r_l))
     add_data = basecreative
     add_data['materials'].append(data)
     r = requests.post(action_u_r_l, json=add_data, headers=baseheader)

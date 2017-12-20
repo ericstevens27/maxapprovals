@@ -120,7 +120,7 @@ def get_adv():
             advertiser_status = ad['status']
     if advertiser_status == 9:
         # did not find advid
-        review = makeadvresponse(2, 1002, "Did not find advertiser {}".format(advid))
+        review = makeadvresponse(2, 1002, "Did not find advertiser {}".format(advid), '')
     else:
         if advertiser_status == 3:
             rr = "Not good company"
@@ -143,14 +143,14 @@ def add_advertiser():
 
     advertiser.data.append(advtoadd)
     savedata('advertiser')
-    resp = makeadvresponse(0, 0, newidstr)
+    resp = makeadvresponse(0, 0, newidstr, '')
     return json.dumps(resp), 200
 
 
 @app.route('/v1/creative/add', methods=['POST'])
 def add_creative():
     if not request.json or not 'materials' in request.json:
-        bad = makeadvresponse(2, 1002, "No json or missing materials block")
+        bad = makeadvresponse(2, 1002, "No json or missing materials block", 'Bad JSON')
         return json.dumps(bad), 400
     adtoadd = request.json['materials'][0]
     newid = len(creative.data) + 50000 + 1
@@ -160,7 +160,7 @@ def add_creative():
 
     creative.data.append(adtoadd)
     savedata('creative')
-    resp = makecreativeresponse(0, 0, adtoadd['creativeId'], newidstr)
+    resp = makecreativeresponse(0, 0, adtoadd['creativeId'], newidstr, '')
     return json.dumps(resp), 200
 
 
@@ -175,7 +175,7 @@ def get_creative():
             ad_status = ad['status']
     if ad_status == 9:
         # did not find materialid
-        review = makecreativeresponse(2, 1002, '', "Did not find material {}".format(matid))
+        review = makecreativeresponse(2, 1002, '', "Did not find material {}".format(matid), '')
     else:
         if ad_status == 3:
             rr = "Very bad ad"
