@@ -15,6 +15,19 @@ basecreative = {
 
     ]
 }
+errorcodes = {
+    1001: "Authentication error (dsp-token error)",
+    1002: "Missing required parameter error",
+    1003: "Illegal parameters",
+    1004: "File format error",
+    1005: "File size error",
+    1006: "The file size is incorrect",
+    1007: "File get error",
+    2001: "Upload failed",
+    2002: "Data does not exist",
+    2003: "Database error"
+}
+
 trackingentry = {
     "type": "",
     "id": "",
@@ -87,7 +100,7 @@ def addadvertiser(u: str, data, track):
         rj = json.loads(r.content.decode('utf-8'))
 
         if rj['code'] != 0:
-            msg.ERROR("Add of advertiser failed [{}]".format(rj))
+            msg.ERROR("Add of advertiser failed with [{}]\n\t{}".format(errorcodes[rj['code']], rj))
         else:
             writetracking(rj['result'][0]['advId'], 0, data, track)
             print("Advertiser added with advID {}".format(rj['result'][0]['advId']))

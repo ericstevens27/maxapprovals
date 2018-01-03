@@ -15,6 +15,19 @@ basecreative = {
 
     ]
 }
+errorcodes = {
+    1001: "Authentication error (dsp-token error)",
+    1002: "Missing required parameter error",
+    1003: "Illegal parameters",
+    1004: "File format error",
+    1005: "File size error",
+    1006: "The file size is incorrect",
+    1007: "File get error",
+    2001: "Upload failed",
+    2002: "Data does not exist",
+    2003: "Database error"
+}
+
 trackingentry = {
     "type": "",
     "id": "",
@@ -57,7 +70,7 @@ def main():
         writetracking(mid, 0, creative.data, tracking_out)
         print("Creative added with materialId of {}".format(mid))
     else:
-        msg.ERROR("Add of creative failed [{}]".format(mid))
+        msg.ERROR("Add of creative failed with [{}]\n\t{}".format(errorcodes[c], mid))
 
 
 def writetracking(a, s, d, t):

@@ -15,6 +15,19 @@ basecreative = {
 
     ]
 }
+errorcodes = {
+    1001: "Authentication error (dsp-token error)",
+    1002: "Missing required parameter error",
+    1003: "Illegal parameters",
+    1004: "File format error",
+    1005: "File size error",
+    1006: "The file size is incorrect",
+    1007: "File get error",
+    2001: "Upload failed",
+    2002: "Data does not exist",
+    2003: "Database error"
+}
+
 
 baseheader = {'content-type': 'application/json', 'authorization': ''}
 
@@ -55,9 +68,11 @@ def main():
                     else:
                         msg.VERBOSE("Creative: Unknown status code or no response")
                 else:
-                    checkresp = "Creative Check Failed for materialId: {}: \n\tMessage: {}\n\tError Code: {}"\
+                    checkresp = "Creative Check Failed for materialId: {}: \n\tMessage: {}\n\tError Code: {} [{}]"\
                                 "\n\tError Message: {}\n\tDescription: {}"
-                    print(checkresp.format(el['id'], rj['msg'], rj['result'][0]['code'], rj['result'][0]['msg'],
+                    print(checkresp.format(el['id'], rj['msg'], rj['result'][0]['code'],
+                                           errorcodes[rj['result'][0]['code']],
+                                           rj['result'][0]['msg'],
                                            rj['result'][0]['desc']))
             else:
                 msg.ERROR("HTTP Response {}".format(status_code))
