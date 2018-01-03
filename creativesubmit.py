@@ -34,8 +34,11 @@ def main():
     """main processing loop"""
     do = arg.MyArgs(usagemsg)
     do.processargs()
-    msg.TEST("Running in test mode.")
-    baseurl = arg.Flags.configsettings['serverurl']
+    if arg.Flags.test:
+        msg.TEST("Running in test mode.")
+        baseurl = arg.Flags.configsettings['testurl']
+    else:
+        baseurl = arg.Flags.configsettings['serverurl']
     msg.DEBUG(do)
     creative = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                            arg.Flags.configsettings['adfile'])

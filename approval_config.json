@@ -1,9 +1,11 @@
 {
   "root": ".",
   "data": "",
-  "serverurl": "http://localhost:5000",
+  "localserverurl": "http://localhost:5000",
+  "serverurl": "http://max.ad.xiaomi.com/audit",
+  "testurl": "http://max.ad.xiaomi.com/audit",
   "dsptoken": "1234567890abcdef",
-  "advfile": "advertiser_2.json",
-  "adfile": "creative_2.json",
+  "advfile": "advertiser_1.json",
+  "adfile": "creative_1.json",
   "tracking": "tracking.json"
 }

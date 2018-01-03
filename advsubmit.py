@@ -33,8 +33,11 @@ def main():
     """main processing loop"""
     do = arg.MyArgs(usagemsg)
     do.processargs()
-    msg.TEST("Running in test mode.")
-    baseurl = arg.Flags.configsettings['serverurl']
+    if arg.Flags.test:
+        msg.TEST("Running in test mode.")
+        baseurl = arg.Flags.configsettings['testurl']
+    else:
+        baseurl = arg.Flags.configsettings['serverurl']
     msg.DEBUG(do)
     advertiser = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                              arg.Flags.configsettings['advfile'])
@@ -61,7 +64,10 @@ def writetracking(a, s, d, t):
 
 
 def addadvertiser(u: str, data, track):
-    action_u_r_l = u + "/v1/advertiser/add"
+    if arg.Flags.test:
+        action_u_r_l = u + "/v1/advertiser/judge/add"
+    else:
+        action_u_r_l = u + "/v1/advertiser/add"
     msg.DEBUG("POST: {}".format(action_u_r_l))
     add_data = baseadvertiser
     add_data['advertisers'].append(data)
@@ -81,7 +87,7 @@ def addadvertiser(u: str, data, track):
         rj = json.loads(r.content.decode('utf-8'))
 
         if rj['code'] != 0:
-            msg.ERROR("Add of advertiser failed [{}}]".format(rj))
+            msg.ERROR("Add of advertiser failed [{}]".format(rj))
         else:
             writetracking(rj['result'][0]['advId'], 0, data, track)
             print("Advertiser added with advID {}".format(rj['result'][0]['advId']))

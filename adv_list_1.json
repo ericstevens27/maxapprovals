@@ -237,5 +237,39 @@
         ],
         "advId": 10014,
         "status": 1
+    },
+    {
+        "companyName": "上海花千树信息科技有限公司",
+        "businessLicenseNum": "",
+        "businessLicensePic": "",
+        "websiteName": "jaiyuan.com",
+        "icpPic": "",
+        "websiteAddress": "http://www.jiayuan.com/",
+        "industry": "519130",
+        "qualifications": [
+            {
+                "key": "internet dating site",
+                "url": "http://app.mi.com/details?id=com.jiayuan"
+            }
+        ],
+        "advId": 10015,
+        "status": 1
+    },
+    {
+        "companyName": "Test Company Name",
+        "businessLicenseNum": "87654321",
+        "businessLicensePic": "http://spacesmobile.com/licese.jpg",
+        "websiteName": "Spaces Mobile",
+        "icpPic": "http://spacesmobile.com/icp.jpg",
+        "websiteAddress": "www.spacesmobile.com.cn",
+        "industry": "51121",
+        "qualifications": [
+            {
+                "key": "software application development",
+                "url": "http://app.mi.com/details?id=com.securespaces.spaces"
+            }
+        ],
+        "advId": 10016,
+        "status": 1
     }
 ]
