@@ -2,7 +2,7 @@
     {
         "type": "advertiser",
         "id": "10001",
-        "status": 1,
+        "status": 4,
         "raw": {
             "companyName": "Test Company Name",
             "businessLicenseNum": "87654321",
@@ -270,7 +270,7 @@
     {
         "type": "advertiser",
         "id": "10014",
-        "status": 0,
+        "status": 1,
         "raw": {
             "companyName": "Test Company Name",
             "businessLicenseNum": "87654321",

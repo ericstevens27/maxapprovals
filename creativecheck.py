@@ -16,7 +16,7 @@ basecreative = {
     ]
 }
 
-baseheader = {'content-type': 'application/json'}
+baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
 usagemsg = "This program checks on the status of the approval for the creative"
@@ -35,6 +35,7 @@ def main():
     tracking_init.readinput()
     tracking_out = rb.WriteJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                                 arg.Flags.configsettings['tracking'])
+    baseheader['authorization'] = arg.Flags.configsettings['dsptoken']
     for el in tracking_init.data:
         if el['type'] == 'creative':
             status_code, rj = querycreative(baseurl, el['id'])

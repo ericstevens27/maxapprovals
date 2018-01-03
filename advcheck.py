@@ -22,7 +22,7 @@ trackingentry = {
     "raw": {}
 }
 
-baseheader = {'content-type': 'application/json'}
+baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
 usagemsg = "This program checks on the status of the approval for the advertiser"
@@ -41,6 +41,7 @@ def main():
     tracking_init.readinput()
     tracking_out = rb.WriteJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                                 arg.Flags.configsettings['tracking'])
+    baseheader['authorization'] = arg.Flags.configsettings['dsptoken']
     for el in tracking_init.data:
         if el['type'] == 'advertiser':
             status_code, rj = queryadvertiser(baseurl, el['id'])

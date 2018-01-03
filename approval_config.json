@@ -2,7 +2,8 @@
   "root": ".",
   "data": "",
   "serverurl": "http://localhost:5000",
-  "advfile": "advertiser_1.json",
-  "adfile": "creative_1.json",
+  "dsptoken": "1234567890abcdef",
+  "advfile": "advertiser_2.json",
+  "adfile": "creative_2.json",
   "tracking": "tracking.json"
 }

@@ -22,7 +22,7 @@ trackingentry = {
     "raw": {}
 }
 
-baseheader = {'content-type': 'application/json'}
+baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
 usagemsg = "This program reads the advertiser from the JSON and adds it to the server"
@@ -44,6 +44,7 @@ def main():
     tracking_out = rb.WriteJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                              arg.Flags.configsettings['tracking'])
     tracking_out.data = tracking_init.data
+    baseheader['authorization'] = arg.Flags.configsettings['dsptoken']
     advertiser.readinput()
     msg.DEBUG("Adding Advertiser: {}".format(advertiser.data))
     addadvertiser(baseurl, advertiser.data, tracking_out)
