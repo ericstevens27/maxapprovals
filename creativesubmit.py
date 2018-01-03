@@ -35,10 +35,7 @@ def main():
     do = arg.MyArgs(usagemsg)
     do.processargs()
     msg.TEST("Running in test mode. Using Localhost")
-    if arg.Flags.test:
-        baseurl = "http://localhost:5000"
-    else:
-        baseurl = arg.Flags.configsettings['baseurl']
+    baseurl = arg.Flags.configsettings['baseurl']
     msg.DEBUG(do)
     creative = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                            arg.Flags.configsettings['adfile'])
