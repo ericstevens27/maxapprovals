@@ -186,5 +186,121 @@
             ],
             "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces"
         }
+    },
+    {
+        "type": "advertiser",
+        "id": "10009",
+        "status": 1,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com",
+            "websiteAddress": "www.spacesmobile.com",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "advertiser",
+        "id": "10010",
+        "status": 1,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com",
+            "websiteAddress": "www.spacesmobile.com",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "advertiser",
+        "id": "10012",
+        "status": 1,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com",
+            "websiteAddress": "www.spacesmobile.com",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "advertiser",
+        "id": "10013",
+        "status": 1,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com",
+            "websiteAddress": "www.spacesmobile.com",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "advertiser",
+        "id": "10014",
+        "status": 0,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com",
+            "websiteAddress": "www.spacesmobile.com",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "creative",
+        "id": "50005",
+        "status": 1,
+        "raw": {
+            "creativeId": "spaces_ad_1",
+            "advId": null,
+            "templateId": "2.4",
+            "title": "This is the title - please download this",
+            "source": "this is the source",
+            "imgUrl": [
+                "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0b821a5eea8094e6802694b226420485b1abb0457"
+            ],
+            "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces"
+        }
     }
 ]
