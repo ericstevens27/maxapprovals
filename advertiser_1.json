@@ -1,15 +1,15 @@
 {
       "companyName": "Test Company Name",
       "businessLicenseNum": "87654321",
-      "businessLicensePic": "http://spacesmobile.com",
+      "businessLicensePic": "http://spacesmobile.com/licese.jpg",
       "websiteName": "Spaces Mobile",
-      "icpPic": "http://spacesmobile.com",
+      "icpPic": "http://spacesmobile.com/icp.jpg",
       "websiteAddress": "www.spacesmobile.com",
       "industry": "51121",
       "qualifications": [
         {
           "key": "software application development",
-          "url": "http://http://app.mi.com/details?id=com.securespaces.spaces"
+          "url": "http://app.mi.com/details?id=com.securespaces.spaces"
         }
       ]
     }
