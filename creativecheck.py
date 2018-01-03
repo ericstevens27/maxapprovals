@@ -27,8 +27,8 @@ def main():
     """main processing loop"""
     do = arg.MyArgs(usagemsg)
     do.processargs()
-    msg.TEST("Running in test mode. Using Localhost")
-    baseurl = arg.Flags.configsettings['baseurl']
+    msg.TEST("Running in test mode.")
+    baseurl = arg.Flags.configsettings['serverurl']
     msg.DEBUG(do)
     tracking_init = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                                 arg.Flags.configsettings['tracking'])
