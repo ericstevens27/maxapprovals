@@ -7,8 +7,8 @@ import random
 
 app = Flask(__name__)
 
-advertiser = rb.ReadJson('', '', 'adv_list_1.json')
-creative = rb.ReadJson('', '', 'creat_list_1.json')
+advertiser = rb.ReadJson('', 'data', 'adv_list_1.json')
+creative = rb.ReadJson('', 'data', 'creat_list_1.json')
 
 force_error = False
 
@@ -130,7 +130,7 @@ def savedata(type):
         d = creative.data
     else:
         print("[ERROR] Bad save data type")
-    w_obj = rb.WriteJson('', '', f)
+    w_obj = rb.WriteJson('', 'data', f)
     w_obj.data = d
     w_obj.writeoutput()
 

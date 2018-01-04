@@ -45,7 +45,7 @@ Programs are:
     readbase.py: internal module to handle read and write of JSON and plain text files
     resetfiles.py: for testing - resets flaskserver files to empty the advertisers and ads.
 
-Deprecated programs are:
+Deprecated programs (in deprecated directory) are:
     advcheck.py: advertiser specific query. Replaced by query.py
     creativecheck.py: creative specific query. Replaced by query.py
     advjudge.py: advertiser specific judge call. Replaced by judge.py
@@ -55,7 +55,7 @@ Deprecated programs are:
     testserver.py: original server for testing. Replaced by flaskserver.py
     usetestserver.py: original all in one program. Replaced by all separate programs.
 
-Files are:
+Files (in data directory) are:
     tracking.json: used to keep a record of the advertisers and creative sbumitted. Used by the query program.
     advertiser_X.json: specific json record for each advertiser
     creative_X.json: specific ajson record for each ad
@@ -63,3 +63,5 @@ Files are:
                      These records can be updated to change the status and return approvals
     creat_list_1.json: flaskserver only. Internal database of advertisers submitted to the flaskserver.
                        These records can be updated to change the status and return approvals
+
+Any files in the other directory are supprting information and are for reference purposes only.

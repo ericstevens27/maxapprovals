@@ -1,6 +1,6 @@
 {
   "root": ".",
-  "data": "",
+  "data": "data",
   "testurl": "http://localhost:5000",
   "serverurl": "https://max.ad.xiaomi.com/audit",
   "xmtesturl": "https://staging.max.ad.xiaomi.com/audit",

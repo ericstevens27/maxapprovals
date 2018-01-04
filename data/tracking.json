@@ -395,5 +395,45 @@
             ],
             "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces"
         }
+    },
+    {
+        "type": "advertiser",
+        "id": "10019",
+        "status": 0,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com/licese.jpg",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com/icp.jpg",
+            "websiteAddress": "www.spacesmobile.com.cn",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "advertiser",
+        "id": "10018",
+        "status": 0,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com/licese.jpg",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com/icp.jpg",
+            "websiteAddress": "www.spacesmobile.com.cn",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
     }
 ]
