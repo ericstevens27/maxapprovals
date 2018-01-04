@@ -87,7 +87,6 @@ def main():
 def queryadvertiser(u: str, a):
     action_u_r_l = u + "/v1/advertiser/query?advId=" + str(a)
     msg.DEBUG("GET: {}".format(action_u_r_l))
-    r = requests.get(action_u_r_l)
     try:
         r = requests.get(action_u_r_l)
         msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
