@@ -399,7 +399,7 @@
     {
         "type": "advertiser",
         "id": "10019",
-        "status": 0,
+        "status": 1,
         "raw": {
             "companyName": "Test Company Name",
             "businessLicenseNum": "87654321",
@@ -419,7 +419,7 @@
     {
         "type": "advertiser",
         "id": "10018",
-        "status": 0,
+        "status": 1,
         "raw": {
             "companyName": "Test Company Name",
             "businessLicenseNum": "87654321",
@@ -439,7 +439,7 @@
     {
         "type": "advertiser",
         "id": "10019",
-        "status": 0,
+        "status": 1,
         "raw": {
             "companyName": "Test Company Name",
             "businessLicenseNum": "87654321",
@@ -454,6 +454,62 @@
                     "url": "http://app.mi.com/details?id=com.securespaces.spaces"
                 }
             ]
+        }
+    },
+    {
+        "type": "advertiser",
+        "id": "10020",
+        "status": 1,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com/licese.jpg",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com/icp.jpg",
+            "websiteAddress": "www.spacesmobile.com.cn",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "advertiser",
+        "id": "10021",
+        "status": 1,
+        "raw": {
+            "companyName": "Test Company Name",
+            "businessLicenseNum": "87654321",
+            "businessLicensePic": "http://spacesmobile.com/licese.jpg",
+            "websiteName": "Spaces Mobile",
+            "icpPic": "http://spacesmobile.com/icp.jpg",
+            "websiteAddress": "www.spacesmobile.com.cn",
+            "industry": "51121",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "creative",
+        "id": "50008",
+        "status": 1,
+        "raw": {
+            "creativeId": "spaces_ad_1",
+            "advId": "10001",
+            "templateId": "2.4",
+            "title": "This is the title - please download this",
+            "source": "this is the source",
+            "imgUrl": [
+                "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0b821a5eea8094e6802694b226420485b1abb0457"
+            ],
+            "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces"
         }
     }
 ]

@@ -99,7 +99,7 @@ def addcreative(u: str, data):
         # Maybe set up for a retry, or continue in a retry loop
         msg.ERROR("Connection timeout Error")
     except requests.exceptions.RequestException as e:
-        msg.ERROR(e)
+        msg.ERROR("Request Exception: {}\nDetails: {}".format(e, e.args))
     if r.status_code == 200:
         if arg.Flags.test:
             msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))

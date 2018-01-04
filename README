@@ -17,19 +17,34 @@ Options:
 
 CONFIG should be approval_config.json
 
+sample program run:
+    python3 advsubmit.py --test --debug --config=approval_config.json
+
+flaskserver takes no arguments as follows:
+    python3 flaskserver.py
+
 General Flow:
     Define the advertiser in the advertiser_X.json file
     Define the ad in the creative_X.json file
     Update the approval_config.json file to point to the desired advertiser_X.json and creative_X.json
     Run advsubmit.py to add the advertiser to the ADX system
+        python3 advsubmit.py --test --debug --config=approval_config.json
+
     Run query with --type=advertiser. This uses the tracking.json record to check on the status of
         all submitted advertisers.
+                python3 query.py --test --debug --type=advertiser --config=approval_config.json
+
     When the advertiser is approved:
         Run creativesubmit.py with the --id=[advId provided by the advsubmit]. This will add the creative.
+                python3 creativesubmit.py --test --debug --config=approval_config.json
+
         Run query with --type=creative. This uses the tracking.json record to check on the status of
             all submitted creative.
+                python3 query.py --test --debug --type=creative --config=approval_config.json
+
     When the creative is approved:
         Run externaladsubmit.py to push the approved creative to the SSEA
+            python3 externaladsubmit.py --test --debug --approval_config.json
 
 Programs are:
     flasksever.py: the testing localhost based server that simulates the Xiaomi ADX REST APIs for advertiser and

@@ -91,5 +91,18 @@
         "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
         "materialId": 50007,
         "status": 1
+    },
+    {
+        "creativeId": "spaces_ad_1",
+        "advId": "10001",
+        "templateId": "2.4",
+        "title": "This is the title - please download this",
+        "source": "this is the source",
+        "imgUrl": [
+            "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0b821a5eea8094e6802694b226420485b1abb0457"
+        ],
+        "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
+        "materialId": 50008,
+        "status": 1
     }
 ]
