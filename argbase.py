@@ -26,11 +26,12 @@ class MyArgs:
     def __str__(self):
         argstring = "Program Arguments:"
         argstring = argstring + "\nFlags are:\n\tVerbose: {}\n\tDebug: {}\n\tTest: {}".format(Flags.verbose,
-                                                                                 Flags.debug,
-                                                                                 Flags.test)
-        argstring = argstring +"\n\tForce: {}\n\tUbuntu: {}\n\tMacOS: {}".format(Flags.force,
-                                                                                 Flags.ubuntu,
-                                                                                 Flags.macos)
+                                                                                              Flags.debug,
+                                                                                              Flags.test)
+        argstring = argstring + "\n\tForce: {}\n\tUbuntu: {}\n\tMacOS: {}".format(Flags.force,
+                                                                                  Flags.ubuntu,
+                                                                                  Flags.macos)
+        argstring = argstring + "\n\tId: {}\n\tType: {}".format(Flags.id, Flags.type)
         argstring = argstring + "\nConfig file is [{}]".format(Flags.config)
         argstring = argstring + "\nConfig settings are:\n" + json.dumps(Flags.configsettings, indent=4)
         return argstring
@@ -43,13 +44,17 @@ class MyArgs:
         parser.add_option("-d", "--debug", dest="debug", action="store_true", default=False,
                           help="Print out debug messages during processing")
         parser.add_option("-t", "--test", dest="test", action="store_true", default=False,
-                          help="Use test number. Ignores appid flag")
+                          help="Use testing server, API and data. Also prints out more information")
         parser.add_option("-f", "--force", dest="force", action="store_true", default=False,
                           help="Force processing")
         parser.add_option("-u", "--update", dest="update", action="store_true", default=False,
-                          help="Update ad records. Default is no updates.")
+                          help="Update records. Default is no updates.")
         parser.add_option("-i", "--id", dest="id", default=None,
-                          help="Id to check for", metavar="ID")
+                          help="Id to check for. Required for creativesubmit (provide advId) and judge (provide adv or material Id to judge)",
+                          metavar="ID")
+        parser.add_option("-p", "--type", dest="type", default=None,
+                          help="Type of API to call. Must be either advertiser or creative. Required by judge.",
+                          metavar="TYPE")
         parser.add_option("-c", "--config", dest="config", default=None,
                           help="Configuration file (JSON)", metavar="CONFIG")
 
@@ -62,6 +67,7 @@ class MyArgs:
         Flags.test = options.test
         Flags.force = options.force
         Flags.id = options.id
+        Flags.type = options.type
         Flags.update = options.update
         if _platform == "linux" or _platform == "linux2":
             # linux
@@ -98,6 +104,7 @@ class MSG:
     def TEST(self, msg):
         if Flags.test:
             print('[TEST]', msg)
+
 
 def displaycounter(message: list, count: list):
     '''provides a pretty counter style display for things like records processed'''
