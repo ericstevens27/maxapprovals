@@ -77,10 +77,7 @@ def writetracking(a, s, d, t):
 
 
 def addadvertiser(u: str, data, track):
-    if arg.Flags.test:
-        action_u_r_l = u + "/v1/advertiser/judge/add"
-    else:
-        action_u_r_l = u + "/v1/advertiser/add"
+    action_u_r_l = u + "/v1/advertiser/add"
     msg.DEBUG("POST: {}".format(action_u_r_l))
     add_data = baseadvertiser
     add_data['advertisers'].append(data)
@@ -92,11 +89,12 @@ def addadvertiser(u: str, data, track):
         msg.ERROR("Connection timeout Error")
     except requests.exceptions.RequestException as e:
         msg.ERROR(e)
-    if arg.Flags.test:
-        msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))
-        msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers, r.url, r.reason))
-
     if r.status_code == 200:
+        if arg.Flags.test:
+            msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))
+            msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers, r.url,
+                                                                                     r.reason))
+
         rj = json.loads(r.content.decode('utf-8'))
 
         if rj['code'] != 0:
@@ -105,7 +103,7 @@ def addadvertiser(u: str, data, track):
             writetracking(rj['result'][0]['advId'], 0, data, track)
             print("Advertiser added with advID {}".format(rj['result'][0]['advId']))
     else:
-        msg.ERROR("HTTP Response {}".format(r.status_code))
+        msg.ERROR("HTTP Response {}\n{}".format(r.status_code, r.content.decode('utf-8')))
 
 
 if __name__ == '__main__':

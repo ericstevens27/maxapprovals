@@ -91,11 +91,14 @@ def querycreative(u: str, a):
         msg.ERROR("Connection timeout Error")
     except requests.exceptions.RequestException as e:
         msg.ERROR(e)
-    if arg.Flags.test:
-        msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))
-        msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers, r.url, r.reason))
-
-    return r.status_code, json.loads(r.content.decode('utf-8'))
+    if r.status_code == 200:
+        if arg.Flags.test:
+            msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))
+            msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers,r.url, r.reason))
+        return r.status_code, json.loads(r.content.decode('utf-8'))
+    else:
+        msg.ERROR("HTTP Response {}\n{}".format(r.status_code, r.content.decode('utf-8')))
+        return None
 
 
 if __name__ == '__main__':

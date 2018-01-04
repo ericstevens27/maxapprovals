@@ -96,17 +96,18 @@ def addcreative(u: str, data):
         msg.ERROR("Connection timeout Error")
     except requests.exceptions.RequestException as e:
         msg.ERROR(e)
-    if arg.Flags.test:
-        msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))
-        msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers, r.url, r.reason))
-
     if r.status_code == 200:
+        if arg.Flags.test:
+            msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))
+            msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers, r.url,
+                                                                                     r.reason))
         rj = json.loads(r.content.decode('utf-8'))
         if rj['code'] != 0:
             return rj['code'], rj['msg']
         else:
             return rj['code'], rj['result'][0]['materialId']
     else:
+        msg.ERROR("HTTP Response {}\n{}".format(r.status_code, r.content.decode('utf-8')))
         return None
 
 
