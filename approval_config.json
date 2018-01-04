@@ -2,10 +2,14 @@
   "root": ".",
   "data": "",
   "testurl": "http://localhost:5000",
-  "serverurl": "http://max.ad.xiaomi.com/audit",
-  "xmtesturl": "http://staging.max.ad.xiaomi.com/audit",
+  "serverurl": "https://max.ad.xiaomi.com/audit",
+  "xmtesturl": "https://staging.max.ad.xiaomi.com/audit",
+  "easerverurl": "https://ssea-dev.securespaces.net",
   "dsptoken": "1234567890abcdef",
   "advfile": "advertiser_1.json",
   "adfile": "creative_1.json",
-  "tracking": "tracking.json"
+  "tracking": "tracking.json",
+    "username": "admin",
+  "password": "Apple1995!"
+
 }

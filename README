@@ -1,0 +1,65 @@
+All of the python programs required version 3.0 or higher. They willl NOT work with Python 2.7!
+
+All programs support standard command line options as follows:
+Options:
+  -h, --help                    show this help message and exit
+  -v, --verbose                 Print out helpful information during processing
+  -d, --debug                   Print out debug messages during processing
+  -t, --test                    Use testing server, API and data. Also prints out more
+                                information
+  -f, --force                   Force processing
+  -u, --update                  Update records. Default is no updates.
+  -i ID, --id=ID                Id to check for. Required for creativesubmit (provide
+                                advId) and judge (provide adv or material Id to judge)
+  -p TYPE, --type=TYPE          Type of API to call. Must be either advertiser or
+                                creative. Required by judge.
+  -c CONFIG, --config=CONFIG    Configuration file (JSON)
+
+CONFIG should be approval_config.json
+
+General Flow:
+    Define the advertiser in the advertiser_X.json file
+    Define the ad in the creative_X.json file
+    Update the approval_config.json file to point to the desired advertiser_X.json and creative_X.json
+    Run advsubmit.py to add the advertiser to the ADX system
+    Run query with --type=advertiser. This uses the tracking.json record to check on the status of
+        all submitted advertisers.
+    When the advertiser is approved:
+        Run creativesubmit.py with the --id=[advId provided by the advsubmit]. This will add the creative.
+        Run query with --type=creative. This uses the tracking.json record to check on the status of
+            all submitted creative.
+    When the creative is approved:
+        Run externaladsubmit.py to push the approved creative to the SSEA
+
+Programs are:
+    flasksever.py: the testing localhost based server that simulates the Xiaomi ADX REST APIs for advertiser and
+                   creative add/update/query
+    advsubmit.py: submits an advertiser for approval
+    creativesubmit.py: submits an ad for approval. Requires an approved advertiser id in the --id option.
+    query.py: checks the status of advertisers and/or creative. Use the --type option to select advertiser or creative.
+              If type is not used it will check all objects.
+    judge.py: uses the judge API for a specific advertiser or creative. Requires the --type option and the --id option.
+              This program does not process the response but only prints out the returned JSON.
+    externaladsubmit.py: adds an ad into the SSEA
+    argbase.py: internal module to handle argument and option processing
+    readbase.py: internal module to handle read and write of JSON and plain text files
+    resetfiles.py: for testing - resets flaskserver files to empty the advertisers and ads.
+
+Deprecated programs are:
+    advcheck.py: advertiser specific query. Replaced by query.py
+    creativecheck.py: creative specific query. Replaced by query.py
+    advjudge.py: advertiser specific judge call. Replaced by judge.py
+    creativejudge.py: creative specific judge call. Replaced by judge.py
+    generalapi.py: used for initial testing.
+    adxsubmit.py: initial submission program. Replaced by advsubmit.py and creativesubmit.py
+    testserver.py: original server for testing. Replaced by flaskserver.py
+    usetestserver.py: original all in one program. Replaced by all separate programs.
+
+Files are:
+    tracking.json: used to keep a record of the advertisers and creative sbumitted. Used by the query program.
+    advertiser_X.json: specific json record for each advertiser
+    creative_X.json: specific ajson record for each ad
+    adv_list_1.json: flaskserver only. Internal database of advertisers submitted to the flaskserver.
+                     These records can be updated to change the status and return approvals
+    creat_list_1.json: flaskserver only. Internal database of advertisers submitted to the flaskserver.
+                       These records can be updated to change the status and return approvals

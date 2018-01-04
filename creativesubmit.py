@@ -63,7 +63,10 @@ def main():
                              arg.Flags.configsettings['tracking'])
     tracking_out.data = tracking_init.data
     baseheader['authorization'] = arg.Flags.configsettings['dsptoken']
-    creative.data['advId'] = arg.Flags.id
+    if arg.Flags.id:
+        creative.data['advId'] = arg.Flags.id
+    else:
+        msg.ERROR("Missing advId in --id option. Cannot process this creative.")
     msg.DEBUG("Adding Creative: {}".format(creative.data))
     c, mid = addcreative(baseurl, creative.data)
     if c == 0:
