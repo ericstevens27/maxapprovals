@@ -1,9 +1,11 @@
 #!flask/bin/python
+import json
+import random
+
 from flask import Flask
 from flask import request
-import json
-import readbase as rb
-import random
+
+from modules import readbase as rb
 
 app = Flask(__name__)
 

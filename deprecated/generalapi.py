@@ -1,7 +1,8 @@
-import readbase as rb
-import argbase as arg
 import json
+
 import requests
+
+from modules import readbase as rb, argbase as arg
 
 # define global variables
 # options as globals

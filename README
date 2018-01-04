@@ -41,8 +41,8 @@ Programs are:
     judge.py: uses the judge API for a specific advertiser or creative. Requires the --type option and the --id option.
               This program does not process the response but only prints out the returned JSON.
     externaladsubmit.py: adds an ad into the SSEA
-    argbase.py: internal module to handle argument and option processing
-    readbase.py: internal module to handle read and write of JSON and plain text files
+    modules/argbase.py: internal module to handle argument and option processing
+    modules/readbase.py: internal module to handle read and write of JSON and plain text files
     resetfiles.py: for testing - resets flaskserver files to empty the advertisers and ads.
 
 Deprecated programs (in deprecated directory) are:

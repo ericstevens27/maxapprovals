@@ -1,8 +1,9 @@
-from optparse import OptionParser
-import readbase as rb
-from sys import platform as _platform
 import json
 import sys
+from optparse import OptionParser
+from sys import platform as _platform
+
+from modules import readbase as rb
 
 
 class Flags:
