@@ -74,7 +74,7 @@ def main():
         writetracking(mid, 0, creative.data, tracking_out)
         print("Creative added with materialId of {}".format(mid))
     else:
-        msg.ERROR("Add of creative failed with [{}]\n\t{}".format(errorcodes[c], mid))
+        msg.ERROR("Add of creative failed with [{}]\n\t{}".format(errorcodes[mid['result'][0]['code']], mid))
 
 
 def writetracking(a, s, d, t):
@@ -107,7 +107,7 @@ def addcreative(u: str, data):
                                                                                      r.reason))
         rj = json.loads(r.content.decode('utf-8'))
         if rj['code'] != 0:
-            return rj['code'], rj['msg']
+            return rj['code'], rj
         else:
             return rj['code'], rj['result'][0]['materialId']
     else:

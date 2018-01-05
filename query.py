@@ -75,20 +75,20 @@ def main():
                     if el['status'] == 1:
                         print("Review Pending for {}".format(el['id']))
                     elif el['status'] == 3:
-                        print("{} Rejected {} with Reason: [{}]".format(el['type'].upper,
+                        print("{} Rejected {} with Reason: [{}]".format(el['type'].title(),
                                                                         el['id'],
                                                                         rj['result'][0]['rejectReason']))
                     elif el['status'] == 4:
-                        print("{} Approved! {}".format(el['type'].upper, el['id']))
+                        print("{} Approved! {}".format(el['type'].title(), el['id']))
                     else:
-                        msg.VERBOSE("{}: Unknown status code or no response".format(el['type'].upper))
+                        msg.VERBOSE("{}: Unknown status code or no response".format(el['type'].title()))
                 else:
                     checkresp = "{} Check Failed for advId: {}: \n\tMessage: {}\n\tError Code: {} [{}]" \
                                 "\n\tError Message: {}\n\tDescription: {}"
-                    print(checkresp.format(el['type'].upper,
-                                           el['id'], rj['msg'], rj['result'][0]['code'],
-                                           errorcodes[rj['result'][0]['code']], rj['result'][0]['msg'],
-                                           rj['result'][0]['desc']))
+                    print(checkresp.format(el['type'].title(),
+                                           el['id'], rj['msg'], rj['code'],
+                                           errorcodes[rj['code']], rj['msg'],
+                                           rj['desc']))
         else:
             if el['type'] == type:
                 status_code, rj = queryelement(baseurl, el['id'], type)
@@ -98,20 +98,20 @@ def main():
                         if el['status'] == 1:
                             print("Review Pending for {}".format(el['id']))
                         elif el['status'] == 3:
-                            print("{} Rejected {} with Reason: [{}]".format(type.upper,
+                            print("{} Rejected {} with Reason: [{}]".format(type.title(),
                                                                             el['id'],
                                                                             rj['result'][0]['rejectReason']))
                         elif el['status'] == 4:
-                            print("{} Approved! {}".format(type.upper, el['id']))
+                            print("{} Approved! {}".format(type.title(), el['id']))
                         else:
                             msg.VERBOSE("{}: Unknown status code or no response".format(type.upper))
                     else:
                         checkresp = "{} Check Failed for advId: {}: \n\tMessage: {}\n\tError Code: {} [{}]" \
-                                    "\n\tError Message: {}\n\tDescription: {}"
-                        print(checkresp.format(type.upper,
-                                               el['id'], rj['msg'], rj['result'][0]['code'],
-                                               errorcodes[rj['result'][0]['code']], rj['result'][0]['msg'],
-                                               rj['result'][0]['desc']))
+                                    "\n\tDescription: {}"
+                        print(checkresp.format(type.title(),
+                                               el['id'], rj['msg'], rj['code'],
+                                               errorcodes[rj['code']],
+                                               rj['desc']))
 
     tracking_out.data = tracking_init.data
     tracking_out.writeoutput()
@@ -124,7 +124,7 @@ def queryelement(u: str, a:str, t: str):
         action_u_r_l = u + "/v1/creative/query?materialId=" + str(a)
     msg.DEBUG("GET: {}".format(action_u_r_l))
     try:
-        r = requests.get(action_u_r_l)
+        r = requests.get(action_u_r_l, headers=baseheader)
         msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
     except requests.exceptions.Timeout:
         # Maybe set up for a retry, or continue in a retry loop
