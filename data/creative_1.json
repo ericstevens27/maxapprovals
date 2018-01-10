@@ -6,9 +6,9 @@
   "summary": "",
   "source": "source",
   "imgUrl": [
-    "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0b821a5eea8094e6802694b226420485b1abb0457"
+    "https://s3.amazonaws.com/adxtesting/spaces_icon.png"
   ],
-  "icon": "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0b821a5eea8094e6802694b226420485b1abb0457",
+  "icon": "https://s3.amazonaws.com/adxtesting/spaces_icon.png",
   "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
   "actionUrl": "http://app.mi.com/download/456819",
   "packageName": "com.securespaces.spaces"
