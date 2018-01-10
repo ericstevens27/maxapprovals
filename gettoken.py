@@ -5,6 +5,7 @@ import requests
 from modules import readbase as rb, argbase as arg
 
 import time
+
 # define global variables
 
 baseadvertiser = {
@@ -37,15 +38,10 @@ trackingentry = {
     "raw": {}
 }
 
-basejudge = {
-    "status": 3,
-    "reason": ""
-}
-
-baseheader = {'content-type': 'application/json', 'authorization': ''}
+baseheader = {'content-type': 'application/json'}
 
 # options as globals
-usagemsg = "This program uses the judge api for the advertiser or creative. It takes a single advertiser or material id."
+usagemsg = "This program gets the DPS token required for Xiaomi ADX authentication"
 msg = arg.MSG()
 
 
@@ -55,47 +51,35 @@ def main():
     do.processargs()
     if arg.Flags.test:
         msg.TEST("Running in test mode.")
-        baseurl = arg.Flags.configsettings['testurl']
+        baseurl = arg.Flags.configsettings['testtokenurl']
     else:
-        baseurl = arg.Flags.configsettings['serverurl']
+        baseurl = arg.Flags.configsettings['tokenurl']
     msg.DEBUG(do)
     rt = rb.ReadJson('', '', arg.Flags.configsettings['tokenfile'])
     rt.readinput()
     now = time.time()
     if rt.data['generatetime'] == '':
         # no token
-        msg.ERROR("Need to generate a new token")
+        msg.VERBOSE("Need to generate a token")
+        rt.data['generatetime'] = 0
     then = int(rt.data['generatetime'])
-    msg.VERBOSE("Token Life: {} seconds".format(now - then))
+    msg.VERBOSE("Duration: {} seconds".format(now - then))
     tokenlife = now - then
     if tokenlife > 1800:
-        msg.ERROR("Please generate a new token")
+        wt = rb.WriteJson('', '', arg.Flags.configsettings['tokenfile'])
+        wt.data['token'] = gettoken(baseurl, arg.Flags.configsettings['clientId'], arg.Flags.configsettings['clientSecret'])
+        wt.data['generatetime'] = now
+        wt.writeoutput()
     else:
-        msg.VERBOSE("DPS token is still valid")
-        baseheader['authorization'] = rt.data['token']
-    objId = arg.Flags.id
-    type = arg.Flags.type
-    status_code, rj = judgeadvertiser(baseurl, objId, type)
-    if status_code == 200:
-        # we don't know what to expect so just print out whatever you got
-        # we assume it is json
-        print("Received JSON as follows:\n{}".format(rj))
+        print("Token is still valid")
 
 
-def judgeadvertiser(u: str, a: str, t: str):
-    action_u_r_l = u + "/v1/" + t + "/judge"
-    msg.DEBUG("POST: {}".format(action_u_r_l))
-    if t == 'advertiser':
-        basejudge["advId"] = a
-        action_u_r_l = action_u_r_l + "?advId=" + a + "&status=4"
-    elif t == 'creative':
-        basejudge["materialId"] = a
-        action_u_r_l = action_u_r_l + "?materialId=" + a + "&status=4"
-    else:
-        msg.ERROR("Bad Type: {} is not supported".format(t))
-    msg.DEBUG("POST data: {}".format(basejudge))
+
+def gettoken(u: str, c:str, s: str):
+    action_u_r_l = u + "get?clientId=" + str(c) + "&clientSecret=" + str(s)
+    msg.DEBUG("GET: {}".format(action_u_r_l))
     try:
-        r = requests.post(action_u_r_l, json=basejudge, headers=baseheader)
+        r = requests.get(action_u_r_l, headers=baseheader)
         msg.DEBUG("{}\n\t{}".format(r.status_code, r.content.decode('utf-8')))
     except requests.exceptions.Timeout:
         # Maybe set up for a retry, or continue in a retry loop
@@ -105,12 +89,13 @@ def judgeadvertiser(u: str, a: str, t: str):
     if r.status_code == 200:
         if arg.Flags.test:
             msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))
-            msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers,r.url, r.reason))
-        return r.status_code, json.loads(r.content.decode('utf-8'))
+            msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers, r.url,
+                                                                                     r.reason))
+        rl = json.loads(r.content.decode('utf-8'))
+        return rl['token']
     else:
         msg.ERROR("HTTP Response {}\n{}".format(r.status_code, r.content.decode('utf-8')))
         return None
-
 
 
 if __name__ == '__main__':

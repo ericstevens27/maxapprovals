@@ -4,6 +4,8 @@ import requests
 
 from modules import readbase as rb, argbase as arg
 
+import time
+
 # define global variables
 
 baseadvertiser = {
@@ -63,7 +65,20 @@ def main():
     tracking_out = rb.WriteJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                              arg.Flags.configsettings['tracking'])
     tracking_out.data = tracking_init.data
-    baseheader['authorization'] = arg.Flags.configsettings['dsptoken']
+    rt = rb.ReadJson('', '', arg.Flags.configsettings['tokenfile'])
+    rt.readinput()
+    now = time.time()
+    if rt.data['generatetime'] == '':
+        # no token
+        msg.ERROR("Need to generate a new token")
+    then = int(rt.data['generatetime'])
+    msg.VERBOSE("Token Life: {} seconds".format(now - then))
+    tokenlife = now - then
+    if tokenlife > 1800:
+        msg.ERROR("Please generate a new token")
+    else:
+        msg.VERBOSE("DPS token is still valid")
+        baseheader['authorization'] = rt.data['token']
     if arg.Flags.id:
         creative.data['advId'] = arg.Flags.id
     else:
