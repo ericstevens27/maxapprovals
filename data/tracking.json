@@ -18,5 +18,25 @@
                 }
             ]
         }
+    },
+    {
+        "type": "creative",
+        "id": "9bf1ae75cf9a4a4c",
+        "status": 4,
+        "raw": {
+            "creativeId": "jiayuan",
+            "advId": "aed8644f45e67135",
+            "templateId": "2.4",
+            "title": "世纪佳缘",
+            "summary": "桃花朵朵开，爱情佳缘寻",
+            "source": "spaces",
+            "imgUrl": [
+                "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0ea707411a2e248da156674b2c20488db35bf1b19"
+            ],
+            "icon": "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0ea707411a2e248da156674b2c20488db35bf1b19",
+            "landingUrl": "http://app.mi.com/details?id=com.jiayuan",
+            "actionUrl": "http://app.mi.com/download/30282",
+            "packageName": "com.jiayuan"
+        }
     }
 ]

@@ -68,12 +68,12 @@ def main():
     now = time.time()
     if rt.data['generatetime'] == '':
         # no token
-        msg.ERROR("Need to generate a new token")
+        msg.ERROR("Need to generate a new token (run gettoken.py)")
     then = int(rt.data['generatetime'])
     msg.VERBOSE("Token Life: {} seconds".format(now - then))
     tokenlife = now - then
     if tokenlife > 1800:
-        msg.ERROR("Please generate a new token")
+        msg.ERROR("Please generate a new token (run gettoken.py)")
     else:
         msg.VERBOSE("DPS token is still valid")
         baseheader['authorization'] = rt.data['token']

@@ -1,15 +1,15 @@
 {
-      "companyName": "北京花千树信息科技有限公司",
-      "businessLicenseNum": "911101175658111420",
-      "businessLicensePic": "https://s3.amazonaws.com/adxtesting/%E5%8C%97%E8%8A%B1%E8%90%A5%E4%B8%9A%E6%89%A7%E7%85%A7%E5%89%AF%E6%9C%AC(%E4%B8%89%E5%90%88%E4%B8%802016.7.25-buslicpic.jpg",
-      "websiteName": "世纪佳缘",
-      "icpPic": "https://s3.amazonaws.com/adxtesting/icp+pic.jpg",
-      "websiteAddress": "http://www.jiayuan.com/",
-      "industry": "2615",
-      "qualifications": [
-        {
-          "key": "internet dating site",
-          "url": "http://app.mi.com/details?id=com.jiayuan"
-        }
-      ]
+  "companyName": "北京花千树信息科技有限公司",
+  "businessLicenseNum": "911101175658111420",
+  "businessLicensePic": "https://s3.amazonaws.com/adxtesting/%E5%8C%97%E8%8A%B1%E8%90%A5%E4%B8%9A%E6%89%A7%E7%85%A7%E5%89%AF%E6%9C%AC(%E4%B8%89%E5%90%88%E4%B8%802016.7.25-buslicpic.jpg",
+  "websiteName": "世纪佳缘",
+  "icpPic": "https://s3.amazonaws.com/adxtesting/icp+pic.jpg",
+  "websiteAddress": "http://www.jiayuan.com/",
+  "industry": "2615",
+  "qualifications": [
+    {
+      "key": "internet dating site",
+      "url": "http://app.mi.com/details?id=com.jiayuan"
     }
+  ]
+}

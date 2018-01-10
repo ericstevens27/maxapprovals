@@ -70,6 +70,7 @@ def main():
         wt.data['token'] = gettoken(baseurl, arg.Flags.configsettings['clientId'], arg.Flags.configsettings['clientSecret'])
         wt.data['generatetime'] = now
         wt.writeoutput()
+        print("New token generated [{}]".format(wt.data['token']))
     else:
         print("Token is still valid")
 
