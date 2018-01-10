@@ -38,5 +38,45 @@
             "actionUrl": "http://app.mi.com/download/30282",
             "packageName": "com.jiayuan"
         }
+    },
+    {
+        "type": "advertiser",
+        "id": "7148e65ad8a509fd",
+        "status": 4,
+        "raw": {
+            "companyName": "别开生面移动科技（北京）有限公司",
+            "businessLicenseNum": "91110105MA001E2C1N",
+            "businessLicensePic": "https://s3.amazonaws.com/adxtesting/BKSM+business+license.jpg",
+            "websiteName": "别开生面空间",
+            "icpPic": "https://s3.amazonaws.com/adxtesting/ICP_BKSM.png",
+            "websiteAddress": "www.spacesmobile.com.cn",
+            "industry": "2719",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ]
+        }
+    },
+    {
+        "type": "creative",
+        "id": "9705c6985fac813f",
+        "status": 4,
+        "raw": {
+            "creativeId": "spaces_ad_1",
+            "advId": "7148e65ad8a509fd",
+            "templateId": "2.4",
+            "title": "别开生面儿童空间",
+            "summary": "父母管控小孩用手机",
+            "source": "source",
+            "imgUrl": [
+                "https://s3.amazonaws.com/adxtesting/spaces_icon.png"
+            ],
+            "icon": "https://s3.amazonaws.com/adxtesting/spaces_icon.png",
+            "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
+            "actionUrl": "http://app.mi.com/download/456819",
+            "packageName": "com.securespaces.spaces"
+        }
     }
 ]

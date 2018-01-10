@@ -12,7 +12,7 @@ Options:
   -i ID, --id=ID                Id to check for. Required for creativesubmit (provide
                                 advId) and judge (provide adv or material Id to judge)
   -p TYPE, --type=TYPE          Type of API to call. Must be either advertiser or
-                                creative. Required by judge.
+                                material or creative. Required by judge.
   -c CONFIG, --config=CONFIG    Configuration file (JSON)
 
 CONFIG should be approval_config.json
@@ -27,6 +27,7 @@ General Flow:
     Define the advertiser in the advertiser_X.json file
     Define the ad in the creative_X.json file
     Update the approval_config.json file to point to the desired advertiser_X.json and creative_X.json
+    Run gettoken.py to generate the required DSP Token (the token will expire in 30 minutes)
     Run advsubmit.py to add the advertiser to the ADX system
         python3 advsubmit.py --test --debug --config=approval_config.json
 
@@ -49,6 +50,7 @@ General Flow:
 Programs are:
     flasksever.py: the testing localhost based server that simulates the Xiaomi ADX REST APIs for advertiser and
                    creative add/update/query
+    gettoken.py: generates the DPS token required for authentication with the Xiaomi staging and live servers
     advsubmit.py: submits an advertiser for approval
     creativesubmit.py: submits an ad for approval. Requires an approved advertiser id in the --id option.
     query.py: checks the status of advertisers and/or creative. Use the --type option to select advertiser or creative.
@@ -70,6 +72,10 @@ Deprecated programs (in deprecated directory) are:
     testserver.py: original server for testing. Replaced by flaskserver.py
     usetestserver.py: original all in one program. Replaced by all separate programs.
 
+Configuration files are:
+    dsptoken.json: Holds the generated token and the generated time
+    approval_config.json: holds the URLs and other required information for all programs to use
+
 Files (in data directory) are:
     tracking.json: used to keep a record of the advertisers and creative sbumitted. Used by the query program.
     advertiser_X.json: specific json record for each advertiser
@@ -79,4 +85,4 @@ Files (in data directory) are:
     creat_list_1.json: flaskserver only. Internal database of advertisers submitted to the flaskserver.
                        These records can be updated to change the status and return approvals
 
-Any files in the other directory are supprting information and are for reference purposes only.
+Any files in the other directory are supporting information and are for reference purposes only.
