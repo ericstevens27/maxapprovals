@@ -4,7 +4,7 @@
   "localurl": "http://localhost:5000",
   "serverurl": "http://max.ad.xiaomi.com/audit",
   "testurl": "http://staging.max.ad.xiaomi.com/audit",
-  "easerverurl": "https://ssea-dev.securespaces.net",
+  "easerverurl": "https://ssea-cn.securespaces.com/",
   "tokenfile": "dsptoken.json",
   "testtokenurl": "http://staging.max.ad.xiaomi.com/v1/token/",
   "tokenurl": "http://max.ad.xiaomi.com/v1/token/",

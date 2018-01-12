@@ -1,8 +1,8 @@
 [
     {
         "type": "advertiser",
-        "id": "aed8644f45e67135",
-        "status": 4,
+        "id": "97e105c3cef2b3a3",
+        "status": 3,
         "raw": {
             "companyName": "北京花千树信息科技有限公司",
             "businessLicenseNum": "911101175658111420",
@@ -20,29 +20,9 @@
         }
     },
     {
-        "type": "creative",
-        "id": "9bf1ae75cf9a4a4c",
-        "status": 4,
-        "raw": {
-            "creativeId": "jiayuan",
-            "advId": "aed8644f45e67135",
-            "templateId": "2.4",
-            "title": "世纪佳缘",
-            "summary": "桃花朵朵开，爱情佳缘寻",
-            "source": "spaces",
-            "imgUrl": [
-                "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0ea707411a2e248da156674b2c20488db35bf1b19"
-            ],
-            "icon": "http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/0ea707411a2e248da156674b2c20488db35bf1b19",
-            "landingUrl": "http://app.mi.com/details?id=com.jiayuan",
-            "actionUrl": "http://app.mi.com/download/30282",
-            "packageName": "com.jiayuan"
-        }
-    },
-    {
         "type": "advertiser",
-        "id": "7148e65ad8a509fd",
-        "status": 4,
+        "id": "b8369d066c8dd016",
+        "status": 3,
         "raw": {
             "companyName": "别开生面移动科技（北京）有限公司",
             "businessLicenseNum": "91110105MA001E2C1N",
@@ -57,26 +37,6 @@
                     "url": "http://app.mi.com/details?id=com.securespaces.spaces"
                 }
             ]
-        }
-    },
-    {
-        "type": "creative",
-        "id": "9705c6985fac813f",
-        "status": 4,
-        "raw": {
-            "creativeId": "spaces_ad_1",
-            "advId": "7148e65ad8a509fd",
-            "templateId": "2.4",
-            "title": "别开生面儿童空间",
-            "summary": "父母管控小孩用手机",
-            "source": "source",
-            "imgUrl": [
-                "https://s3.amazonaws.com/adxtesting/spaces_icon.png"
-            ],
-            "icon": "https://s3.amazonaws.com/adxtesting/spaces_icon.png",
-            "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
-            "actionUrl": "http://app.mi.com/download/456819",
-            "packageName": "com.securespaces.spaces"
         }
     }
 ]

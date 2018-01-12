@@ -11,5 +11,6 @@
   "icon": "https://s3.amazonaws.com/adxtesting/spaces_icon.png",
   "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
   "actionUrl": "http://app.mi.com/download/456819",
-  "packageName": "com.securespaces.spaces"
+  "packageName": "com.securespaces.spaces",
+  "appId": 456819
 }

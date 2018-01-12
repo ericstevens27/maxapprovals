@@ -65,7 +65,7 @@ def main():
     then = int(rt.data['generatetime'])
     msg.VERBOSE("Duration: {} seconds".format(now - then))
     tokenlife = now - then
-    if tokenlife > 1800:
+    if tokenlife > 1800 or arg.Flags.force:
         wt = rb.WriteJson('', '', arg.Flags.configsettings['tokenfile'])
         wt.data['token'] = gettoken(baseurl, arg.Flags.configsettings['clientId'], arg.Flags.configsettings['clientSecret'])
         wt.data['generatetime'] = now
