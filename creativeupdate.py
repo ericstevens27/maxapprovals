@@ -46,7 +46,7 @@ trackingentry = {
 baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
-usagemsg = "This program reads the reative from the JSON and adds it to the server"
+usagemsg = "This program reads the reative from the JSON and updates it on the server"
 msg = arg.MSG()
 
 
@@ -83,17 +83,26 @@ def main():
     else:
         msg.VERBOSE("DPS token is still valid")
         baseheader['authorization'] = rt.data['token']
-    if arg.Flags.id:
-        creative.data['advId'] = arg.Flags.id
+    if not arg.Flags.id:
+        msg.ERROR("Missing --id option. id must be the creativeID to update")
+    msg.DEBUG("Updating Creative: id: {} with data: {}".format(arg.Flags.id, creative.data))
+    mat = None
+    c = 1
+    mid = None
+    for item in tracking_init.data:
+        if item['type'] == 'creative':
+            if item['creativeId'] == arg.Flags.id:
+                creative.data['materialId'] = item['id']
+                creative.data['advId'] = item['advId']
+    if mat:
+        c, mid = updatecreative(baseurl, creative.data)
     else:
-        msg.ERROR("Missing advId in --id option. Cannot process this creative.")
-    msg.DEBUG("Adding Creative: {}".format(creative.data))
-    c, mid = addcreative(baseurl, creative.data)
+        msg.ERROR("Could not find creative in tracking file to get material Id")
     if c == 0:
-        writetracking(mid, 0, creative.data, tracking_out)
-        print("Creative added with materialId of {}".format(mid))
+        # writetracking(mid, 0, creative.data, tracking_out)
+        print("Creative updated with materialId of {}".format(mid))
     else:
-        msg.ERROR("Add of creative failed with [{}]\n\t{}".format(errorcodes[mid['result'][0]['code']], mid))
+        msg.ERROR("Update of creative failed with [{}]\n\t{}".format(errorcodes[mid['result'][0]['code']], mid))
 
 
 def extractgroup(match):
@@ -110,20 +119,19 @@ def writetracking(a, s, d, t, aid):
     newrec['status'] = s
     newrec['raw'] = d
     newrec['creativeId'] = d['creativeId']
-    newrec['advId'] = d['advId']
     re_appid = r"download\/(\d*)"
     newrec['xmAppId'] = extractgroup(re.search(re_appid, d['actionUrl']))
     t.data.append(newrec)
     t.writeoutput()
 
 
-def addcreative(u: str, data):
-    action_u_r_l = u + "/v1/creative/add"
+def updatecreative(u: str, data):
+    action_u_r_l = u + "/v1/creative/update"
     msg.DEBUG("POST: {}".format(action_u_r_l))
-    add_data = basecreative
-    add_data['materials'].append(data)
+    update_data = basecreative
+    update_data['materials'].append(data)
     try:
-        r = requests.post(action_u_r_l, json=add_data, headers=baseheader)
+        r = requests.post(action_u_r_l, json=update_data, headers=baseheader)
         msg.DEBUG("{}\n\t{}\n\t{}".format(action_u_r_l, r.status_code, r.content.decode('utf-8')))
     except requests.exceptions.Timeout:
         # Maybe set up for a retry, or continue in a retry loop

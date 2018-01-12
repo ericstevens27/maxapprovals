@@ -6,8 +6,6 @@ from modules import readbase as rb, argbase as arg
 
 import time
 
-import re
-
 # define global variables
 
 baseadvertiser = {
@@ -37,16 +35,13 @@ trackingentry = {
     "type": "",
     "id": "",
     "status": 0,
-    "creativeId": "",
-    "xmAppId": 0,
     "raw": {}
 }
-
 
 baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
-usagemsg = "This program reads the reative from the JSON and adds it to the server"
+usagemsg = "This program reads the advertiser from the JSON and updates it on the server"
 msg = arg.MSG()
 
 
@@ -60,9 +55,8 @@ def main():
     else:
         baseurl = arg.Flags.configsettings['serverurl']
     msg.DEBUG(do)
-    creative = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
-                           arg.Flags.configsettings['adfile'])
-    creative.readinput()
+    advertiser = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
+                             arg.Flags.configsettings['advfile'])
     tracking_init = rb.ReadJson(arg.Flags.configsettings['root'], arg.Flags.configsettings['data'],
                              arg.Flags.configsettings['tracking'])
     tracking_init.readinput()
@@ -83,47 +77,32 @@ def main():
     else:
         msg.VERBOSE("DPS token is still valid")
         baseheader['authorization'] = rt.data['token']
-    if arg.Flags.id:
-        creative.data['advId'] = arg.Flags.id
+    advertiser.readinput()
+    if not arg.Flags.id:
+        msg.ERROR("Missing --id for advID. Id is needed to know which advertiser to update")
     else:
-        msg.ERROR("Missing advId in --id option. Cannot process this creative.")
-    msg.DEBUG("Adding Creative: {}".format(creative.data))
-    c, mid = addcreative(baseurl, creative.data)
-    if c == 0:
-        writetracking(mid, 0, creative.data, tracking_out)
-        print("Creative added with materialId of {}".format(mid))
-    else:
-        msg.ERROR("Add of creative failed with [{}]\n\t{}".format(errorcodes[mid['result'][0]['code']], mid))
+        msg.DEBUG("Updating Advertiser: Id: {} with data: {}".format(arg.Flags.id, advertiser.data))
+        updateadvertiser(baseurl, arg.Flags.id, advertiser.data, tracking_out)
 
 
-def extractgroup(match):
-    """extract the group (index: 1) from the match object"""
-    if match is None:
-        return None
-    return match.group(1)
-
-
-def writetracking(a, s, d, t, aid):
+def writetracking(a, s, d, t):
     newrec = trackingentry
-    newrec['type'] = 'creative'
+    newrec['type'] = 'advertiser'
     newrec['id'] = a
     newrec['status'] = s
     newrec['raw'] = d
-    newrec['creativeId'] = d['creativeId']
-    newrec['advId'] = d['advId']
-    re_appid = r"download\/(\d*)"
-    newrec['xmAppId'] = extractgroup(re.search(re_appid, d['actionUrl']))
     t.data.append(newrec)
     t.writeoutput()
 
 
-def addcreative(u: str, data):
-    action_u_r_l = u + "/v1/creative/add"
+def updateadvertiser(u: str, id, data, track):
+    action_u_r_l = u + "/v1/advertiser/update"
     msg.DEBUG("POST: {}".format(action_u_r_l))
-    add_data = basecreative
-    add_data['materials'].append(data)
+    update_data = baseadvertiser
+    update_data['advertisers'].append(data)
+    update_data['advId'] = id
     try:
-        r = requests.post(action_u_r_l, json=add_data, headers=baseheader)
+        r = requests.post(action_u_r_l, json=update_data, headers=baseheader)
         msg.DEBUG("{}\n\t{}\n\t{}".format(action_u_r_l, r.status_code, r.content.decode('utf-8')))
     except requests.exceptions.Timeout:
         # Maybe set up for a retry, or continue in a retry loop
@@ -135,14 +114,16 @@ def addcreative(u: str, data):
             msg.TEST("full json is \n\t{}".format(json.loads(r.content.decode('utf-8'))))
             msg.TEST("\n\tstatus: {}\n\theaders: {}\n\turl: {}\n\treason: {}".format(r.status_code, r.headers, r.url,
                                                                                      r.reason))
+
         rj = json.loads(r.content.decode('utf-8'))
+
         if rj['code'] != 0:
-            return rj['code'], rj
+            msg.ERROR("Update of advertiser failed with [{}]\n\t{}".format(errorcodes[rj['code']], rj))
         else:
-            return rj['code'], rj['result'][0]['materialId']
+            writetracking(rj['result'][0]['advId'], 0, data, track)
+            print("Advertiser updated with advID {}".format(rj['result'][0]['advId']))
     else:
         msg.ERROR("HTTP Response {}\n{}".format(r.status_code, r.content.decode('utf-8')))
-        return None
 
 
 if __name__ == '__main__':
