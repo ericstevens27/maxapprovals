@@ -1,7 +1,7 @@
 import json
 
 import requests
-
+import re
 from modules import readbase as rb, argbase as arg
 
 # define global variables
@@ -67,13 +67,22 @@ def main():
     if ad.gettoken():
         if arg.Flags.test:
             msg.DEBUG("Adding Creative to SSEA: {}".format(creative.data))
-            ad.makeappad(creative.data)
+            ad.makeappad(creative.data, 0)
         else:
             for c in track.data:
-                msg.DEBUG("Adding Creative to SSEA: {}".format(c))
-                cd = c['raw']
-                ad.makeappad(cd)
+                if c['status'] == 4:
+                    # creative approved - add this to SSEA, otherwise skip
+                    cd = c['raw']
+                    msg.DEBUG("Adding Creative to SSEA: {}".format(cd))
+                    ad.makeappad(cd, c['id'])
         res = ad.callssea('logout', '', '')
+
+
+def extractgroup(match):
+    """extract the group (index: 1) from the match object"""
+    if match is None:
+        return None
+    return match.group(1)
 
 
 class SSEAApi:
@@ -183,7 +192,7 @@ class SSEAApi:
         else:
             return False
 
-    def makeappad(self, ad):
+    def makeappad(self, ad, matid):
         """forms up the data fields needed to construct or update the ad"""
         # Name is the prefix 'Xiaomi_' plus to package name to be unique
         self.data['adName'] = ad['creativeId']
@@ -193,9 +202,10 @@ class SSEAApi:
         self.data['content']['actionurl'] = ad['actionUrl']
         self.data['content']['summary'] = ad['summary']
         self.data['content']['packagename'] = ad['packageName']
-        self.data['content']['appid'] = ad['appId']
+        re_appid = r"download\/(\d*)"
+        self.data['content']['appid'] = extractgroup(re.search(re_appid, ad['actionUrl']))
         self.data['content']['landingurl'] = ad['landingUrl']
-        self.data['content']['adid'] = 0
+        self.data['content']['adid'] = matid
         self.data['content']['imgurl'] = ad['imgUrl'][0]
         msg.DEBUG(json.dumps(self.data, indent=4))
         self.pushappad()

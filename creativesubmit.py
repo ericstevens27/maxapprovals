@@ -6,6 +6,8 @@ from modules import readbase as rb, argbase as arg
 
 import time
 
+import re
+
 # define global variables
 
 baseadvertiser = {
@@ -35,6 +37,8 @@ trackingentry = {
     "type": "",
     "id": "",
     "status": 0,
+    "creativeId": "",
+    "xmAppId": 0,
     "raw": {}
 }
 
@@ -92,12 +96,22 @@ def main():
         msg.ERROR("Add of creative failed with [{}]\n\t{}".format(errorcodes[mid['result'][0]['code']], mid))
 
 
-def writetracking(a, s, d, t):
+def extractgroup(match):
+    """extract the group (index: 1) from the match object"""
+    if match is None:
+        return None
+    return match.group(1)
+
+
+def writetracking(a, s, d, t, aid):
     newrec = trackingentry
     newrec['type'] = 'creative'
     newrec['id'] = a
     newrec['status'] = s
     newrec['raw'] = d
+    newrec['creativeId'] = d['creativeId']
+    re_appid = r"download\/(\d*)"
+    newrec['xmAppId'] = extractgroup(re.search(re_appid, d['actionUrl']))
     t.data.append(newrec)
     t.writeoutput()
 

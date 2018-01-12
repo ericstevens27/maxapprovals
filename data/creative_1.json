@@ -6,11 +6,10 @@
   "summary": "父母管控小孩用手机",
   "source": "source",
   "imgUrl": [
-    "https://s3.amazonaws.com/adxtesting/spaces_icon.png"
+    "https://s3.cn-north-1.amazonaws.com.cn/adximages/spaces_icon.png"
   ],
-  "icon": "https://s3.amazonaws.com/adxtesting/spaces_icon.png",
+  "icon": "https://s3.cn-north-1.amazonaws.com.cn/adximages/spaces_icon.png",
   "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
   "actionUrl": "http://app.mi.com/download/456819",
-  "packageName": "com.securespaces.spaces",
-  "appId": 456819
+  "packageName": "com.securespaces.spaces"
 }
