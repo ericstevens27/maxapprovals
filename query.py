@@ -86,17 +86,20 @@ def main():
             status_code, rj = queryelement(baseurl, el['id'], el['type'])
             if status_code == 200:
                 if rj['code'] == 0:
-                    el['status'] = rj['result'][0]['status']
-                    if el['status'] == 1:
-                        print("Review Pending for {}".format(el['id']))
-                    elif el['status'] == 3:
-                        print("{} Rejected {} with Reason: [{}]".format(el['type'].title(),
-                                                                        el['id'],
-                                                                        rj['result'][0]['rejectReason']))
-                    elif el['status'] == 4:
-                        print("{} Approved! {}".format(el['type'].title(), el['id']))
+                    if rj['result'] == []:
+                        msg.ERROR("Result returned is empty")
                     else:
-                        msg.VERBOSE("{}: Unknown status code or no response".format(el['type'].title()))
+                        el['status'] = rj['result'][0]['status']
+                        if el['status'] == 1:
+                            print("Review Pending for {}".format(el['id']))
+                        elif el['status'] == 3:
+                            print("{} Rejected {} with Reason: [{}]".format(el['type'].title(),
+                                                                            el['id'],
+                                                                            rj['result'][0]['rejectReason']))
+                        elif el['status'] == 4:
+                            print("{} Approved! {}".format(el['type'].title(), el['id']))
+                        else:
+                            msg.VERBOSE("{}: Unknown status code or no response".format(el['type'].title()))
                 else:
                     checkresp = "{} Check Failed for advId: {}: \n\tMessage: {}\n\tError Code: {} [{}]" \
                                 "\n\tError Message: {}\n\tDescription: {}"
@@ -109,17 +112,21 @@ def main():
                 status_code, rj = queryelement(baseurl, el['id'], type)
                 if status_code == 200:
                     if rj['code'] == 0:
-                        el['status'] = rj['result'][0]['status']
-                        if el['status'] == 1:
-                            print("Review Pending for {}".format(el['id']))
-                        elif el['status'] == 3:
-                            print("{} Rejected {} with Reason: [{}]".format(type.title(),
-                                                                            el['id'],
-                                                                            rj['result'][0]['rejectReason']))
-                        elif el['status'] == 4:
-                            print("{} Approved! {}".format(type.title(), el['id']))
+                        if rj['result'] == []:
+                            msg.ERROR("Result returned is empty")
                         else:
-                            msg.VERBOSE("{}: Unknown status code or no response".format(type.upper))
+
+                            el['status'] = rj['result'][0]['status']
+                            if el['status'] == 1:
+                                print("Review Pending for {}".format(el['id']))
+                            elif el['status'] == 3:
+                                print("{} Rejected {} with Reason: [{}]".format(type.title(),
+                                                                                el['id'],
+                                                                                rj['result'][0]['rejectReason']))
+                            elif el['status'] == 4:
+                                print("{} Approved! {}".format(type.title(), el['id']))
+                            else:
+                                msg.VERBOSE("{}: Unknown status code or no response".format(type.upper))
                     else:
                         checkresp = "{} Check Failed for advId: {}: \n\tMessage: {}\n\tError Code: {} [{}]" \
                                     "\n\tDescription: {}"

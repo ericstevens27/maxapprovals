@@ -86,21 +86,20 @@ def main():
 
 
 def writetracking(a, s, d, t):
-    newrec = trackingentry
-    newrec['type'] = 'advertiser'
-    newrec['id'] = a
-    newrec['status'] = s
-    newrec['raw'] = d
-    t.data.append(newrec)
-    t.writeoutput()
+    for i in t.data:
+        if i['id'] == a:
+            # update this tracking record
+            i['raw'] = d
+            t.writeoutput()
 
 
 def updateadvertiser(u: str, id, data, track):
     action_u_r_l = u + "/v1/advertiser/update"
     msg.DEBUG("POST: {}".format(action_u_r_l))
     update_data = baseadvertiser
+    data['advId'] = id
     update_data['advertisers'].append(data)
-    update_data['advId'] = id
+    msg.DEBUG("About to POST this data \n{}".format(update_data))
     try:
         r = requests.post(action_u_r_l, json=update_data, headers=baseheader)
         msg.DEBUG("{}\n\t{}\n\t{}".format(action_u_r_l, r.status_code, r.content.decode('utf-8')))
@@ -118,7 +117,7 @@ def updateadvertiser(u: str, id, data, track):
         rj = json.loads(r.content.decode('utf-8'))
 
         if rj['code'] != 0:
-            msg.ERROR("Update of advertiser failed with [{}]\n\t{}".format(errorcodes[rj['code']], rj))
+            msg.ERROR("Update of advertiser failed with [{}]\n\t{}".format(errorcodes[rj['result'][0]['code']], rj))
         else:
             writetracking(rj['result'][0]['advId'], 0, data, track)
             print("Advertiser updated with advID {}".format(rj['result'][0]['advId']))

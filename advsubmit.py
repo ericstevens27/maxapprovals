@@ -114,7 +114,7 @@ def addadvertiser(u: str, data, track):
         rj = json.loads(r.content.decode('utf-8'))
 
         if rj['code'] != 0:
-            msg.ERROR("Add of advertiser failed with [{}]\n\t{}".format(errorcodes[rj['code']], rj))
+            msg.ERROR("Add of advertiser failed with [{}]\n\t{}".format(errorcodes[rj['result'][0]['code']], rj))
         else:
             writetracking(rj['result'][0]['advId'], 0, data, track)
             print("Advertiser added with advID {}".format(rj['result'][0]['advId']))

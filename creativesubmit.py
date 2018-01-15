@@ -103,7 +103,7 @@ def extractgroup(match):
     return match.group(1)
 
 
-def writetracking(a, s, d, t, aid):
+def writetracking(a, s, d, t):
     newrec = trackingentry
     newrec['type'] = 'creative'
     newrec['id'] = a

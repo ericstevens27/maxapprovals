@@ -1,0 +1,27 @@
+[
+    {
+        "type": "advertiser",
+        "id": "85205c73e67e7ec9",
+        "status": 1,
+        "raw": {
+            "companyName": "别开生面移动科技（北京）有限公司 22",
+            "businessLicenseNum": "91110105MA001E2C1N",
+            "businessLicensePic": "https://s3.cn-north-1.amazonaws.com.cn/adximages/BKSM+business+license.jpg",
+            "websiteName": "别开生面空间",
+            "icpPic": "https://s3.cn-north-1.amazonaws.com.cn/adximages/BKSM_ICPpic_stamped.jpeg",
+            "websiteAddress": "www.spacesmobile.com.cn",
+            "industry": "2719",
+            "qualifications": [
+                {
+                    "key": "software application development",
+                    "url": "http://app.mi.com/details?id=com.securespaces.spaces"
+                },
+                {
+                    "key": "software application development",
+                    "url": "http://app.mi.com/details?id=com.securespaces.spaces"
+                }
+            ],
+            "advId": "85205c73e67e7ec9"
+        }
+    }
+]

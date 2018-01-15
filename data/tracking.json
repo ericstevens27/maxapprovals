@@ -2,7 +2,7 @@
     {
         "type": "advertiser",
         "id": "97e105c3cef2b3a3",
-        "status": 3,
+        "status": 4,
         "raw": {
             "companyName": "北京花千树信息科技有限公司",
             "businessLicenseNum": "911101175658111420",
@@ -22,7 +22,7 @@
     {
         "type": "advertiser",
         "id": "b8369d066c8dd016",
-        "status": 3,
+        "status": 4,
         "raw": {
             "companyName": "别开生面移动科技（北京）有限公司",
             "businessLicenseNum": "91110105MA001E2C1N",
@@ -38,5 +38,50 @@
                 }
             ]
         }
+    },
+    {
+        "type": "creative",
+        "id": "4a34da584a48dae0",
+        "status": 1,
+        "creativeId": "spaces_ad_1",
+        "xmAppId": 456819,
+        "raw": {
+            "creativeId": "spaces_ad_1",
+            "advId": "",
+            "templateId": "2.4",
+            "title": "别开生面儿童空间",
+            "summary": "父母管控小孩用手机",
+            "source": "source",
+            "imgUrl": [
+                "https://s3.cn-north-1.amazonaws.com.cn/adximages/spaces_icon.png"
+            ],
+            "icon": "https://s3.cn-north-1.amazonaws.com.cn/adximages/spaces_icon.png",
+            "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
+            "actionUrl": "http://app.mi.com/download/456819",
+            "packageName": "com.securespaces.spaces"
+        }
+    },
+    {
+        "type": "creative",
+        "id": "5f72be98239dc561",
+        "status": 1,
+        "creativeId": "jiayuan",
+        "xmAppId": "30282",
+        "raw": {
+            "creativeId": "jiayuan",
+            "advId": "97e105c3cef2b3a3",
+            "templateId": "2.4",
+            "title": "世纪佳缘",
+            "summary": "桃花朵朵开，爱情佳缘寻",
+            "source": "source",
+            "imgUrl": [
+                "https://s3.cn-north-1.amazonaws.com.cn/adximages/jaiyuan_icon.png"
+            ],
+            "icon": "https://s3.cn-north-1.amazonaws.com.cn/adximages/jaiyuan_icon.png",
+            "landingUrl": "http://app.mi.com/details?id=com.jiayuan",
+            "actionUrl": "http://app.mi.com/download/30282",
+            "packageName": "com.jiayuan"
+        },
+        "advId": "97e105c3cef2b3a3"
     }
 ]
