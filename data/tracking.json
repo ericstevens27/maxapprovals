@@ -44,7 +44,7 @@
         "id": "4a34da584a48dae0",
         "status": 1,
         "creativeId": "spaces_ad_1",
-        "xmAppId": 456819,
+        "xmAppId": "456819",
         "raw": {
             "creativeId": "spaces_ad_1",
             "advId": "",
@@ -59,7 +59,8 @@
             "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
             "actionUrl": "http://app.mi.com/download/456819",
             "packageName": "com.securespaces.spaces"
-        }
+        },
+              "advId": "b8369d066c8dd016"
     },
     {
         "type": "creative",
