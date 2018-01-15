@@ -41,7 +41,8 @@ trackingentry = {
 baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
-usagemsg = "This program checks on the status of the approval for the advertiser"
+usagemsg = "This program checks on the status of the approval for the advertiser"\
+            "Use --type=[advertiser|creative] to select which type of object to query."
 msg = arg.MSG()
 
 

@@ -41,7 +41,8 @@ trackingentry = {
 baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
-usagemsg = "This program reads the advertiser from the JSON and updates it on the server"
+usagemsg = "This program reads the advertiser from the JSON and updates it on the server."\
+           "Requires --id=[advertiser id] to define which advertiser to update."
 msg = arg.MSG()
 
 

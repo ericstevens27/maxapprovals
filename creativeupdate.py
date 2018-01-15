@@ -46,7 +46,8 @@ trackingentry = {
 baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
-usagemsg = "This program reads the reative from the JSON and updates it on the server"
+usagemsg = "This program reads the reative from the JSON and updates it on the server"\
+            "Requires --id=[material id] of the creative id to update"
 msg = arg.MSG()
 
 

@@ -46,7 +46,9 @@ trackingentry = {
 baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
-usagemsg = "This program reads the reative from the JSON and adds it to the server"
+usagemsg = "This program reads the reative from the JSON and adds it to the server"\
+            "Requires --id=[advertiser id] to link the creative to the advertiser"\
+            "Advertiser must have been approved for ADX will return an error message"
 msg = arg.MSG()
 
 
