@@ -1,0 +1,15 @@
+{
+  "creativeId": "spaces_ad_1",
+  "advId": "",
+  "templateId": "2.4",
+  "title": "儿童空间 · 别开生面",
+  "summary": "限制时间，控制下载，管控小孩玩手机",
+  "source": "source",
+  "imgUrl": [
+    "https://s3.cn-north-1.amazonaws.com.cn/adximages/spaces.png"
+  ],
+  "icon": "https://s3.cn-north-1.amazonaws.com.cn/adximages/spaces.png",
+  "landingUrl": "http://app.mi.com/details?id=com.securespaces.spaces",
+  "actionUrl": "http://app.mi.com/download/456819",
+  "packageName": "com.securespaces.spaces"
+}

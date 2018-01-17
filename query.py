@@ -93,14 +93,20 @@ def main():
                         el['status'] = rj['result'][0]['status']
                         if el['status'] == 1:
                             print("Review Pending for {}".format(el['id']))
+                            msg.VERBOSE(el)
+
                         elif el['status'] == 3:
                             print("{} Rejected {} with Reason: [{}]".format(el['type'].title(),
                                                                             el['id'],
                                                                             rj['result'][0]['rejectReason']))
+                            msg.VERBOSE(el)
+
                         elif el['status'] == 4:
                             print("{} Approved! {}".format(el['type'].title(), el['id']))
+                            msg.VERBOSE(el)
+
                         else:
-                            msg.VERBOSE("{}: Unknown status code or no response".format(el['type'].title()))
+                            msg.ERROR("{}: Unknown status code or no response".format(el['type'].title()))
                 else:
                     checkresp = "{} Check Failed for advId: {}: \n\tMessage: {}\n\tError Code: {} [{}]" \
                                 "\n\tError Message: {}\n\tDescription: {}"
@@ -120,14 +126,19 @@ def main():
                             el['status'] = rj['result'][0]['status']
                             if el['status'] == 1:
                                 print("Review Pending for {}".format(el['id']))
+                                msg.VERBOSE(el)
                             elif el['status'] == 3:
                                 print("{} Rejected {} with Reason: [{}]".format(type.title(),
                                                                                 el['id'],
                                                                                 rj['result'][0]['rejectReason']))
+                                msg.VERBOSE(el)
+
                             elif el['status'] == 4:
                                 print("{} Approved! {}".format(type.title(), el['id']))
+                                msg.VERBOSE(el)
+
                             else:
-                                msg.VERBOSE("{}: Unknown status code or no response".format(type.upper))
+                                msg.ERROR("{}: Unknown status code or no response".format(type.upper))
                     else:
                         checkresp = "{} Check Failed for advId: {}: \n\tMessage: {}\n\tError Code: {} [{}]" \
                                     "\n\tDescription: {}"

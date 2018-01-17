@@ -10,8 +10,8 @@
   "tokenurl": "http://max.ad.xiaomi.com/v1/token/",
   "clientId": "cea7bb2fcad0433d",
   "clientSecret": "fc43af85493af13a71e6dadc45ba3904",
-  "advfile": "advertiser_2.json",
-  "adfile": "creative_2.json",
+  "advfile": "advertiser_2_update.json",
+  "adfile": "creative_1_update.json",
   "tracking": "tracking.json",
   "username": "admin",
   "password": "Apple1995!"

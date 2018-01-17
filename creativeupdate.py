@@ -87,23 +87,29 @@ def main():
     if not arg.Flags.id:
         msg.ERROR("Missing --id option. id must be the creativeID to update")
     msg.DEBUG("Updating Creative: id: {} with data: {}".format(arg.Flags.id, creative.data))
-    mat = None
+    foundad = False
     c = 1
     mid = None
     for item in tracking_init.data:
+        msg.DEBUG("Found this item in tracking {}".format(item))
         if item['type'] == 'creative':
             if item['creativeId'] == arg.Flags.id:
+                msg.DEBUG("Found the creative id")
                 creative.data['materialId'] = item['id']
                 creative.data['advId'] = item['advId']
-    if mat:
-        c, mid = updatecreative(baseurl, creative.data)
-    else:
+                msg.VERBOSE("About to update with this data \n{}".format(creative.data))
+                c, mid = updatecreative(baseurl, creative.data)
+                foundad = True
+    if not foundad:
         msg.ERROR("Could not find creative in tracking file to get material Id")
     if c == 0:
         # writetracking(mid, 0, creative.data, tracking_out)
         print("Creative updated with materialId of {}".format(mid))
     else:
-        msg.ERROR("Update of creative failed with [{}]\n\t{}".format(errorcodes[mid['result'][0]['code']], mid))
+        if mid == None:
+            msg.ERROR("Update of creative failed - No tracking data")
+        else:
+            msg.ERROR("Update of creative failed with [{}]\n\t{}".format(errorcodes[mid['result'][0]['code']], mid))
 
 
 def extractgroup(match):
