@@ -92,17 +92,18 @@ def main():
                     else:
                         el['status'] = rj['result'][0]['status']
                         if el['status'] == 1:
-                            print("Review Pending for {}".format(el['id']))
+                            print("Review Pending for {} [{}]".format(el['creativeId'], el['id']))
                             msg.VERBOSE(el)
 
                         elif el['status'] == 3:
-                            print("{} Rejected {} with Reason: [{}]".format(el['type'].title(),
+                            print("{} Rejected {} [{}] with Reason: [{}]".format(el['type'].title(),
+                                                                            el['creativeId'],
                                                                             el['id'],
                                                                             rj['result'][0]['rejectReason']))
                             msg.VERBOSE(el)
 
                         elif el['status'] == 4:
-                            print("{} Approved! {}".format(el['type'].title(), el['id']))
+                            print("{} Approved! {} [{}]".format(el['type'].title(), el['creativeId'], el['id']))
                             msg.VERBOSE(el)
 
                         else:
@@ -125,16 +126,17 @@ def main():
 
                             el['status'] = rj['result'][0]['status']
                             if el['status'] == 1:
-                                print("Review Pending for {}".format(el['id']))
+                                print("Review Pending for {} [{}]".format(el['creativeId'], el['id']))
                                 msg.VERBOSE(el)
                             elif el['status'] == 3:
-                                print("{} Rejected {} with Reason: [{}]".format(type.title(),
-                                                                                el['id'],
-                                                                                rj['result'][0]['rejectReason']))
+                                print("{} Rejected {} [{}] with Reason: [{}]".format(el['type'].title(),
+                                                                                     el['creativeId'],
+                                                                                     el['id'],
+                                                                                     rj['result'][0]['rejectReason']))
                                 msg.VERBOSE(el)
 
                             elif el['status'] == 4:
-                                print("{} Approved! {}".format(type.title(), el['id']))
+                                print("{} Approved! {} [{}]".format(el['type'].title(), el['creativeId'], el['id']))
                                 msg.VERBOSE(el)
 
                             else:
