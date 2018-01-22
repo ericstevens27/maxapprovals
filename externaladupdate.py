@@ -40,7 +40,7 @@ trackingentry = {
 baseheader = {'content-type': 'application/json', 'authorization': ''}
 
 # options as globals
-usagemsg = "This program inserts the creative identified by id into the SSEA server"
+usagemsg = "This program updates the creative identified by id in the SSEA server"
 msg = arg.MSG()
 
 
@@ -65,16 +65,7 @@ def main():
     ad = SSEAApi(arg.Flags.configsettings['username'], arg.Flags.configsettings['password'],
                  arg.Flags.configsettings['easerverurl'])
     if ad.gettoken():
-        if arg.Flags.test:
-            msg.DEBUG("Adding Creative to SSEA: {}".format(creative.data))
-            ad.makeappad(creative.data, 0)
-        else:
-            for c in track.data:
-                if c['type'] == 'creative' and c['status'] == 4:
-                    # creative approved - add this to SSEA, otherwise skip
-                    cd = c['raw']
-                    msg.DEBUG("Adding Creative to SSEA: {}".format(cd))
-                    ad.makeappad(cd, c['id'])
+        ad.callssea('list', arg.Flags.id, 'adName')
         res = ad.callssea('logout', '', '')
 
 
@@ -89,7 +80,7 @@ class SSEAApi:
     def __init__(self, user: str, password: str, sseapath: str):
         self.user = user
         self.password = password
-        self.ssea = sseapath + '/api/v2/web/'
+        self.ssea = sseapath + 'api/v2/web/'
         self.xsrf_token = ''
         self.nameprefix = "Xiaomi_"
         self.tokenheader = {'content-type': 'application/json', 'X-XSRF-TOKEN': ''}
@@ -203,12 +194,12 @@ class SSEAApi:
         self.data['content']['summary'] = ad['summary']
         self.data['content']['packagename'] = ad['packageName']
         re_appid = r"download\/(\d*)"
-        self.data['content']['appid'] = int(extractgroup(re.search(re_appid, ad['actionUrl'])))
+        self.data['content']['appid'] = extractgroup(re.search(re_appid, ad['actionUrl']))
         self.data['content']['landingurl'] = ad['landingUrl']
         self.data['content']['adid'] = matid
         self.data['content']['imgurl'] = ad['imgUrl'][0]
         msg.DEBUG(json.dumps(self.data, indent=4))
-        self.pushappad()
+        # self.pushappad()
 
     def pushappad(self):
         """Checks for an ad with the same packname and if not then creates the ad"""
